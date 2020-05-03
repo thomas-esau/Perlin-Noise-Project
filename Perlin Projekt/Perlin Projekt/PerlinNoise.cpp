@@ -108,7 +108,6 @@ double PerlinNoise2D::smoothening(double num)
     //return num;
 };
 
-
 double PerlinNoise2D::noise(double x, double y)
 {
     
@@ -151,7 +150,40 @@ double PerlinNoise2D::noise(double x, double y)
     return value;
 };
 
-void PerlinNoise2D::createGrid()
+double* PerlinNoise2D_FILE::getVector(uint32_t x0, uint32_t y0)
+{
+    //myfile.ignore
+    double* vector = new double[2];
+    std::ifstream myfile;
+    myfile.open("values.txt");
+    std::string myText;
+
+    unsigned int i = 0;
+    while (myfile >> myText)
+    {
+        if (i == (XPOS * y0 * 2) + x0 * 2)
+        {
+            //std::cout << myText << "\n";
+            vector[0] = std::stod(myText.c_str());
+            //std::cout << vector[0] << "\n";
+        }
+
+        if (i == (XPOS * y0 * 2) + x0 * 2 + 1)
+        {
+            //std::cout << myText << "\n";
+            vector[1] = std::stod(myText.c_str());
+            //std::cout << vector[1] << "\n";
+            //break;
+        }
+        i++;
+    }
+    myfile.close();
+
+    return vector;
+
+};
+
+void PerlinNoise2D_FILE::createGrid()
 {
     std::cout << "Create grid..." << "\n";
 	std::ofstream myfile;
@@ -169,40 +201,7 @@ void PerlinNoise2D::createGrid()
     std::cout << "Grid successfully created.\n";
 }
 
-double* PerlinNoise2D::getVector(unsigned int x0, unsigned int y0)
-{
-    //myfile.ignore
-    double* vector = new double[2];
-    std::ifstream myfile;
-    myfile.open("values.txt");
-    std::string myText;
-
-    unsigned int i = 0;
-    while (myfile >> myText)
-    {
-        if (i == (XPOS * y0 * 2)+x0*2)
-        {
-            //std::cout << myText << "\n";
-            vector[0] = std::stod(myText.c_str());
-            //std::cout << vector[0] << "\n";
-        }   
-        
-        if (i == (XPOS * y0 * 2)+x0*2+1)
-        {
-            //std::cout << myText << "\n";
-            vector[1] = std::stod(myText.c_str());
-            //std::cout << vector[1] << "\n";
-            //break;
-        }
-        i++;
-    }
-    myfile.close();
-
-    return vector;
-
-};
-
-double* PerlinNoise2D_MEM::getVector(unsigned int x0,unsigned int y0)
+double* PerlinNoise2D_MEM::getVector(uint32_t x0, uint32_t y0)
 {
     if (x0 >= XPOS) x0 = x0 % XPOS;
     if (y0 >= YPOS) y0 = y0 % YPOS;
