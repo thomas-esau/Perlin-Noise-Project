@@ -1,0 +1,20 @@
+﻿  PerlinNoise.cpp
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(51,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(54,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(8,23): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(9,27): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(53,27): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(55,31): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(67,138): warning C4244: "Argument": Konvertierung von "double" in "sf::Uint8", möglicher Datenverlust
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(67,109): warning C4244: "Argument": Konvertierung von "double" in "sf::Uint8", möglicher Datenverlust
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(67,80): warning C4244: "Argument": Konvertierung von "double" in "sf::Uint8", möglicher Datenverlust
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(160,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(162,27): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(215,26): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(217,30): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
+  main.cpp
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(51,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(54,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\main.cpp(17,20): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+main.obj : error LNK2001: Nicht aufgelöstes externes Symbol ""public: virtual void __thiscall PerlinNoise2D_MEM::resetPerlinNoise2D(unsigned int,unsigned int,unsigned int,unsigned int,unsigned int)" (?resetPerlinNoise2D@PerlinNoise2D_MEM@@UAEXIIIII@Z)".
+C:\Users\Thomas\source\repos\Perlin Projekt\Release\Perlin Projekt.exe : fatal error LNK1120: 1 nicht aufgelöste Externe
