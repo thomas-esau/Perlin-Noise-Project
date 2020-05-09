@@ -1,20 +1,22 @@
 #include "PerlinNoise.h"
-void PerlinNoise2D::createPPMFile(std::string filename, double magx, double magy, double height, double amp, int grayscales)
+
+int PerlinNoise2D_MEM::objectCount{ 0 };
+void PerlinNoise2D::createPPMFile(std::string filename, PerlinModifiers mod)
 {
     std::cout << "Create .ppm file...\n";
     std::ofstream ofs;
-    ofs.open("./"+filename, std::ios::out | std::ios::binary);
-    ofs << "P6\n" << XPOS << " " << YPOS << "\n255\n";
-    for (int i = 0; i < YPOS; ++i) {
-        for (int j = 0; j < XPOS; ++j)
+    ofs.open("./Output/"+filename+".ppm", std::ios::out | std::ios::binary);
+    ofs << "P6\n" << SIZE_X << " " << SIZE_Y << "\n255\n";
+    for (int i = 0; i < SIZE_Y; ++i) {
+        for (int j = 0; j < SIZE_X; ++j)
         {
 
             double perlinValue;
-            if (grayscales == 1)
-                perlinValue = (noise(( (j + OFFSET_X) * magx), ((i + OFFSET_Y) * magy)) + height) * amp;
+            if (mod.grayscales == 1)
+                perlinValue = (noise(( (j + offset_x) * mod.scale_x), ((i + offset_y) * mod.scale_y)) + mod.height) * mod.amplitude;
             else
-                perlinValue = (int)((noise(((j + OFFSET_X) * magx), ((i + OFFSET_Y) * magy)) + height) * amp);
-            unsigned char n = static_cast<unsigned char>(perlinValue * 255 / grayscales);
+                perlinValue = (int)((noise(((j + offset_x) * mod.scale_x), ((i + offset_y) * mod.scale_y)) + mod.height) * mod.amplitude);
+            unsigned char n = static_cast<unsigned char>(perlinValue * 255 / mod.grayscales);
             ofs << n << n << n;
         }
     }
@@ -22,7 +24,8 @@ void PerlinNoise2D::createPPMFile(std::string filename, double magx, double magy
     std::cout << ".ppm file was successfully created.\n";
 }
 
-void PerlinNoise2D::drawNoise(unsigned int width, unsigned int height, double magx, double magy, double height_p, double amp, int grayscales)
+
+void PerlinNoise2D::drawNoise(unsigned int width, unsigned int height, PerlinModifiers mod)
 {
     sf::RenderWindow window(sf::VideoMode(width, height), "SFML works!");
     sf::Image perlinnoise;
@@ -37,7 +40,6 @@ void PerlinNoise2D::drawNoise(unsigned int width, unsigned int height, double ma
     std::uniform_real_distribution<double> double_range(-0.05, 0.05);
 
 
-    double mod = 0;
     while (window.isOpen())
     {
         
@@ -56,15 +58,15 @@ void PerlinNoise2D::drawNoise(unsigned int width, unsigned int height, double ma
             { 
                 //mod = double_range(random_mod);
                 double perlinValue;
-                if (grayscales == 1)
+                if (mod.grayscales == 1)
                 {
-                    perlinValue = (noise(((j + OFFSET_X)  * magx) + mod, ((i + OFFSET_Y) * magy) + mod) + height_p) * amp;
+                    perlinValue = (noise(((j + offset_x)  * mod.scale_x) , ((i + offset_y) * mod.scale_y) ) + mod.height) * mod.amplitude;
                 }
                 else
                 {
-                    perlinValue = (int)((noise(((j + OFFSET_X) * magx) + mod, ((i + OFFSET_Y) * magy) + mod) + height_p) * amp);
+                    perlinValue = (int)((noise(((j + offset_x) * mod.scale_x) , ((i + offset_y) * mod.scale_y) ) + mod.height) * mod.amplitude);
                 }
-                perlinnoise.setPixel(j, i , sf::Color(perlinValue * grayscales * 2, perlinValue* grayscales * 2, perlinValue* grayscales * 2));
+                perlinnoise.setPixel(j, i , sf::Color(perlinValue * mod.grayscales * 2, perlinValue* mod.grayscales * 2, perlinValue* mod.grayscales * 2));
 
             }
         }
@@ -76,7 +78,7 @@ void PerlinNoise2D::drawNoise(unsigned int width, unsigned int height, double ma
 
         //Parameter, die verändert werden
         //amp *= 0.999;
-        //magx *= 0.99;
+        //mod.scale_x *= 0.99;
         //magy *= 0.99;
     }
 }
@@ -150,6 +152,14 @@ double PerlinNoise2D::noise(double x, double y)
     return value;
 };
 
+std::string PerlinNoise2D::toString()
+{
+
+    std::string output = "SIZE_X: " + std::to_string(SIZE_X) + " // SIZE_Y: " + std::to_string(SIZE_Y) + 
+        " // OFFSET_X: " + std::to_string(offset_x) + " // OFFSET_Y: " + std::to_string(offset_y);
+    return output;
+};
+
 double* PerlinNoise2D_FILE::getVector(uint32_t x0, uint32_t y0)
 {
     //myfile.ignore
@@ -161,14 +171,14 @@ double* PerlinNoise2D_FILE::getVector(uint32_t x0, uint32_t y0)
     unsigned int i = 0;
     while (myfile >> myText)
     {
-        if (i == (XPOS * y0 * 2) + x0 * 2)
+        if (i == (SIZE_X * y0 * 2) + x0 * 2)
         {
             //std::cout << myText << "\n";
             vector[0] = std::stod(myText.c_str());
             //std::cout << vector[0] << "\n";
         }
 
-        if (i == (XPOS * y0 * 2) + x0 * 2 + 1)
+        if (i == (SIZE_X * y0 * 2) + x0 * 2 + 1)
         {
             //std::cout << myText << "\n";
             vector[1] = std::stod(myText.c_str());
@@ -185,35 +195,35 @@ double* PerlinNoise2D_FILE::getVector(uint32_t x0, uint32_t y0)
 
 void PerlinNoise2D_FILE::createGrid()
 {
-    std::cout << "Create grid..." << "\n";
+    std::cout << "Create grid (FILE)..." << "\n";
 	std::ofstream myfile;
 	myfile.open("values.txt");
 	
-	for (int i = 0; i < YPOS; i++)
+	for (int i = 0; i < SIZE_Y; i++)
 	{
-        for (int j = 0; j < XPOS; j++)
+        for (int j = 0; j < SIZE_X; j++)
         {
             double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
             myfile << vector[0] << " " << vector[1] << "\n";
         }
 	}
 	myfile.close();
-    std::cout << "Grid successfully created.\n";
+    std::cout << "Grid (FILE) successfully created.\n";
 }
 
 double* PerlinNoise2D_MEM::getVector(uint32_t x0, uint32_t y0)
 {
-    if (x0 >= XPOS) x0 = x0 % XPOS;
-    if (y0 >= YPOS) y0 = y0 % YPOS;
+    if (x0 >= SIZE_X) x0 = x0 % SIZE_X;
+    if (y0 >= SIZE_Y) y0 = y0 % SIZE_Y;
     double* vector = new double[2]{ grid[x0][y0][0], grid[x0][y0][1] };
     return vector;
 };
 
 void PerlinNoise2D_MEM::createGrid()
 {
-    for (int i = 0; YPOS > i; i++)
+    for (int i = 0; SIZE_Y > i; i++)
     {
-        for (int j = 0; XPOS > j; j++)
+        for (int j = 0; SIZE_X > j; j++)
         {
             double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
             grid[j][i][0] = vector[0];
@@ -222,3 +232,127 @@ void PerlinNoise2D_MEM::createGrid()
         }
     }
 };
+
+void PerlinNoise2D_MEM::createGridPart(uint32_t x, uint32_t y, uint32_t subsections_x, uint32_t subsections_y)
+{
+    uint32_t mapPartPos_x = (objectID - 1) % subsections_x;
+    uint32_t mapPartPos_y = (int)((objectID - 1) / subsections_x);
+
+    std::cout << "x: " << mapPartPos_x << " y: " << mapPartPos_y << "\n";
+
+    /*
+    mt_rng.discard(mapPartPos_y * x * SIZE_Y);
+    for (int i = 0; SIZE_Y > i; i++)
+    {
+        //if (offset_x == 0) mt_rng.discard(SIZE_X * (subsections_x - 1));
+        //if (offset_x > 0) mt_rng.discard(SIZE_X);
+
+
+        
+
+        for (int j = 0; SIZE_X > j; j++)
+        {
+
+            double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
+            grid[j][i][0] = vector[0];
+            grid[j][i][1] = vector[1];
+            delete vector;
+
+
+        }
+    }
+    */
+
+    for (int i = 0; subsections_y > i; i++)
+    {
+        mt_rng.discard(mapPartPos_y * x * SIZE_Y);
+        for (int j = 0; subsections_x > j; j++)
+        {
+            for (int k = 0; SIZE_Y > k; k++)
+            {
+                if (j < mapPartPos_x) mt_rng.discard(SIZE_X);
+
+                if (j == mapPartPos_x)
+                {
+                    for (int l = 0; SIZE_X > l; l++)
+                    {
+                        double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
+                        grid[l][k][0] = vector[0];
+                        grid[l][k][1] = vector[1];
+                        delete vector;
+                    }
+                }
+
+                if (j > mapPartPos_x && i == mapPartPos_y) mt_rng.discard(SIZE_X);
+            }
+        }
+        if (i == mapPartPos_y) return;
+    }
+
+};
+
+
+void PerlinNoise2D_MEM::dumpGrid()
+{
+
+    std::ofstream myfile;
+    myfile.open("./Output/"+std::to_string(objectID)+".txt");
+
+    for (int i = 0; i < SIZE_Y; i++)
+    {
+        for (int j = 0; j < SIZE_X; j++)
+        {
+            double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
+            myfile << grid[j][i][0] << " " << grid[j][i][1] << "\n";
+        }
+    }
+    myfile.close();
+    std::cout << "Grid (FILE) successfully created.\n";
+};
+
+
+
+/*
+for (int k = 0; SIZE_Y > k; k++)
+{
+    for (int l = 0; SIZE_X > l; l++)
+    {
+        if (j < mapPartPos_x && i == mapPartPos_y) mt_rng.discard(SIZE_X);
+        if (j == mapPartPos_x && i == mapPartPos_y)
+        {
+            double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
+            grid[j][i][0] = vector[0];
+            grid[j][i][1] = vector[1];
+            delete vector;
+        }
+        if (j > mapPartPos_x && i == mapPartPos_y) mt_rng.discard(SIZE_X);
+    }
+}
+
+
+
+
+
+if (j == mapPartPos_x && i == mapPartPos_y)
+{
+    if (j < mapPartPos_x) mt_rng.discard(SIZE_X);
+    for (int k = 0; SIZE_Y > k; k++)
+    {
+
+        for (int l = 0; SIZE_X > l; l++)
+        {
+            if (j < mapPartPos_x) mt_rng.discard(SIZE_X);
+            if (j == mapPartPos_x)
+            {
+                double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
+                grid[j][i][0] = vector[0];
+                grid[j][i][1] = vector[1];
+                delete vector;
+            }
+            if (j > mapPartPos_x && i == mapPartPos_y) mt_rng.discard(SIZE_X);
+        }
+    }
+
+    break;
+}
+*/

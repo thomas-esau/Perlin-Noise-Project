@@ -154,10 +154,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="old_main.cpp" />
+    <ClCompile Include="PerlinMap.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PerlinMap.h" />
     <ClInclude Include="PerlinNoise.h" />
+    <ClInclude Include="PerlinModifiers.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="notes.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

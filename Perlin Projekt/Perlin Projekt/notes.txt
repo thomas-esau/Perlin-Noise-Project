@@ -1,0 +1,6 @@
+* PerlinModifiers mod in PerlinNoise -> nach PerlinMap. Jede Teilkarte benötigt nicht unbedingt eigene mod Datei.
+	* mod als Argument in Methoden benutzen
+* PerlinNoise2D_MEM in PerlinMap: Lösung für 
+* Oneliner entweder in den Header verschieben oder in cpp
+* Allocate Grid: i und j für size_x und size_y tauschen
+* Grid Variable in PerlinNoise: Durch Vector ersetzen?

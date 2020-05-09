@@ -8,22 +8,27 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "PerlinModifiers.h"
+#include <vector>
 
 class PerlinNoise2D
 {
 public:
 
 	// Constructors
-	PerlinNoise2D(uint32_t init_XPOS, uint32_t init_YPOS, uint32_t init_OFFSET_X, uint32_t init_OFFSET_Y, uint32_t init_SEED) : XPOS{ init_XPOS }, YPOS{ init_YPOS }, OFFSET_X{init_OFFSET_X}, OFFSET_Y{ init_OFFSET_Y }, SEED{ init_SEED }
+	PerlinNoise2D(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_offset_x, uint32_t init_offset_y, uint32_t init_SEED) : 
+		SIZE_X{ init_SIZE_X }, SIZE_Y{ init_SIZE_Y }, offset_x{ init_offset_x }, offset_y{ init_offset_y }, SEED{ init_SEED }
 	{
 		mt_rng = std::mt19937(SEED);
 		float_range = std::uniform_real_distribution<float>(0,360);
+		
+		//std::cout << "PerlinNoise2D Object has been created." << "\n";
 	};
-	PerlinNoise2D(uint32_t init_XPOS, uint32_t init_YPOS, uint32_t init_SEED) : PerlinNoise2D(init_XPOS, init_YPOS, 0, 0, init_SEED) {};
+
 	PerlinNoise2D() : PerlinNoise2D(1,1,0,0,1) {};
+	
 
 	// Virtual Functions
-	virtual void resetPerlinNoise2D(uint32_t init_XPOS, uint32_t init_YPOS, uint32_t init_OFFSET_X, uint32_t init_OFFSET_Y, uint32_t init_SEED) { XPOS = init_XPOS; YPOS = init_YPOS; OFFSET_X = init_OFFSET_X; OFFSET_Y = init_OFFSET_Y; SEED = init_SEED; };
+	//virtual void resetPerlinNoise2D(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_SEED) { SIZE_X = init_SIZE_X; SIZE_Y = init_SIZE_Y; SEED = init_SEED; };
 	virtual double* getVector(uint32_t x0, uint32_t y0) = 0;
 	virtual void createGrid() = 0;
 
@@ -35,16 +40,25 @@ public:
 	double noise(double x, double y);
 
 	// Output Functions
-	void createPPMFile(std::string filename, double magx, double magy, double height, double amp, int grayscales);
-	void drawNoise(unsigned int width, unsigned int height, double magx, double magy, double height_p, double amp, int grayscales);
+	void createPPMFile(std::string filename, PerlinModifiers mod);
+	void drawNoise(unsigned int width, unsigned int height, PerlinModifiers mod);
+	std::string toString();
+	std::mt19937& getRNG() { return mt_rng; };
+	void printRNG() { std::cout << float_range(mt_rng) << "\n"; }
+
+
 
 
 
 protected:
-	uint32_t XPOS, YPOS, SEED, OFFSET_X, OFFSET_Y;
+	const uint32_t SIZE_X, SIZE_Y, SEED;
 	std::mt19937 mt_rng;
 	std::uniform_real_distribution<float> float_range;
-	PerlinModifiers mod;
+	uint32_t offset_x, offset_y;
+	//static uint16_t total_maps = 0;
+
+
+
 };
 
 // Grid stored and accessed in Memory
@@ -53,22 +67,27 @@ class PerlinNoise2D_MEM : public PerlinNoise2D
 public:
 	
 	// Constructors
-	PerlinNoise2D_MEM(uint32_t init_XPOS, uint32_t init_YPOS, uint32_t init_OFFSET_X, uint32_t init_OFFSET_Y, uint32_t init_SEED) : PerlinNoise2D(init_XPOS, init_YPOS, init_OFFSET_X, init_OFFSET_Y, init_SEED)
+	PerlinNoise2D_MEM(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_offset_x, uint32_t init_offset_y, uint32_t init_SEED) 
+		: PerlinNoise2D(init_SIZE_X, init_SIZE_Y, init_offset_x, init_offset_y, init_SEED)
 	{
 		allocateGrid();
-		createGrid();
+		objectCount++;
+		objectID = objectCount;
+		//createGrid();
+
+		std::cout << "PerlinNoise2D_MEM ("<<objectID<<") Object has been created." << "\n";
+
 	};
-	PerlinNoise2D_MEM(uint32_t init_XPOS, uint32_t init_YPOS, uint32_t init_SEED) : PerlinNoise2D_MEM(init_XPOS, init_YPOS, 0, 0, init_SEED) {};
 	PerlinNoise2D_MEM() : PerlinNoise2D_MEM(1, 1, 0, 0, 1) {};
 
 	// Exclusive Functions from derived Class
 	void allocateGrid()
 	{
-		grid = new double** [XPOS];
-		for (int i = 0; i < XPOS; i++)
+		grid = new double** [SIZE_X];
+		for (int i = 0; i < SIZE_X; i++)
 		{
-			grid[i] = new double* [YPOS];
-			for (int j = 0; j < YPOS; j++)
+			grid[i] = new double* [SIZE_Y];
+			for (int j = 0; j < SIZE_Y; j++)
 			{
 				grid[i][j] = new double[2];
 			}
@@ -76,9 +95,9 @@ public:
 	};
 	void deallocateGrid()
 	{
-		for (int i = 0; i < XPOS; i++)
+		for (int i = 0; i < SIZE_X; i++)
 		{
-			for (int j = 0; j < YPOS; j++)
+			for (int j = 0; j < SIZE_Y; j++)
 			{
 				delete grid[i][j];
 			}
@@ -86,27 +105,43 @@ public:
 		}
 		delete grid;
 	};
-	void createGrid();
+	void createGrid() override;
+	void createGridPart(uint32_t x, uint32_t y, uint32_t subsections_x, uint32_t subsections_y);
+	void dumpGrid();
 
 	// Overridden Functions
-	void resetPerlinNoise2D(uint32_t init_XPOS, uint32_t init_YPOS, uint32_t init_OFFSET_X, uint32_t init_OFFSET_Y, uint32_t init_SEED) override
+	/*void resetPerlinNoise2D(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_SEED) override
 	{
 		deallocateGrid();
-		PerlinNoise2D::resetPerlinNoise2D(init_XPOS, init_YPOS, init_OFFSET_X, init_OFFSET_Y, init_SEED);
+		PerlinNoise2D::resetPerlinNoise2D(init_SIZE_X, init_SIZE_Y, init_SEED);
 		allocateGrid();
 	};
+
+	void resetPerlinNoise2D(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_SEED, PerlinModifiers setMod) override 
+	{ PerlinNoise2D::resetPerlinNoise2D(init_SIZE_X, init_SIZE_Y, init_SEED, setMod); };
+	*/
+
 	double* getVector(uint32_t x0, uint32_t y0) override;
 	
 
 private:
 	double*** grid;
+	static int objectCount;
+	int objectID;
 };
 
 // Grid stored and accessed in Files
 class PerlinNoise2D_FILE : public PerlinNoise2D
 {
-	//void resetPerlinNoise2D(uint32_t init_XPOS, uint32_t init_YPOS, uint32_t init_OFFSET_X, uint32_t init_OFFSET_Y, uint32_t init_SEED) override;
+public:
+	PerlinNoise2D_FILE(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_offset_x, uint32_t init_offset_y, uint32_t init_SEED) 
+		: PerlinNoise2D(init_SIZE_X, init_SIZE_Y, init_offset_x, init_offset_y, init_SEED)
+	{
+		createGrid();
+		std::cout << "PerlinNoise2D_FILE Object has been created." << "\n";
+	};
+	//void resetPerlinNoise2D(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_OFFSET_X, uint32_t init_OFFSET_Y, uint32_t init_SEED) override;
 	double* getVector(uint32_t x0, uint32_t y0) override;
-	void createGrid();
+	void createGrid() override;
 	
 };

@@ -1,15 +1,29 @@
-﻿  main.cpp
-C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(67,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(70,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(78,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(80,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\main.cpp(17,20): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\main.cpp(23,44): warning C4244: "Argument": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
-C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\main.cpp(23,33): warning C4244: "Argument": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
-C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\main.cpp(34,82): warning C4244: "Argument": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
-C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\main.cpp(34,59): warning C4244: "Argument": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
+﻿  PerlinMap.cpp
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(87,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(90,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(98,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(100,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+  main.cpp
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(87,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(90,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(98,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinNoise.h(100,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinMap.h(18,22): warning C4244: "=": Konvertierung von "double" in "uint16_t", möglicher Datenverlust
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinMap.h(11): message : beim Kompilieren der Klasse Vorlage-Memberfunktion "PerlinMap<PerlinNoise2D_MEM>::PerlinMap(uint32_t,uint32_t,uint32_t,uint32_t,uint32_t)"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\main.cpp(29): message : Siehe Verweis auf die gerade kompilierte Instanziierung "PerlinMap<PerlinNoise2D_MEM>::PerlinMap(uint32_t,uint32_t,uint32_t,uint32_t,uint32_t)" der Funktions-Vorlage.
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\main.cpp(29): message : Siehe Verweis auf die gerade kompilierte Klasse Vorlage-Instanziierung "PerlinMap<PerlinNoise2D_MEM>".
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinMap.h(21,40): warning C4244: "=": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinMap.h(22,40): warning C4244: "=": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinMap.h(34,2): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinMap.h(33): message : beim Kompilieren der Klasse Vorlage-Memberfunktion "void PerlinMap<PerlinNoise2D_MEM>::constructMapParts(void)"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinMap.h(24): message : Siehe Verweis auf die gerade kompilierte Instanziierung "void PerlinMap<PerlinNoise2D_MEM>::constructMapParts(void)" der Funktions-Vorlage.
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinMap.h(37,2): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinMap.cpp(7,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinMap.cpp(6): message : beim Kompilieren der Klasse Vorlage-Memberfunktion "void PerlinMap<PerlinNoise2D_MEM>::calcMap(void)"
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\main.cpp(30): message : Siehe Verweis auf die gerade kompilierte Instanziierung "void PerlinMap<PerlinNoise2D_MEM>::calcMap(void)" der Funktions-Vorlage.
+C:\Users\Thomas\source\repos\Perlin Projekt\Perlin Projekt\PerlinMap.cpp(10,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
   Code wird generiert.
-  1 of 230 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+  3 of 350 functions ( 0.9%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Codegenerierung ist abgeschlossen.
