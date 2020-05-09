@@ -240,55 +240,46 @@ void PerlinNoise2D_MEM::createGridPart(uint32_t x, uint32_t y, uint32_t subsecti
 
     std::cout << "x: " << mapPartPos_x << " y: " << mapPartPos_y << "\n";
 
-    /*
+
+    //mt_rng.discard(SIZE_X);
     mt_rng.discard(mapPartPos_y * x * SIZE_Y);
-    for (int i = 0; SIZE_Y > i; i++)
-    {
-        //if (offset_x == 0) mt_rng.discard(SIZE_X * (subsections_x - 1));
-        //if (offset_x > 0) mt_rng.discard(SIZE_X);
-
-
+    std::cout << "Beginning Discards: " << (mapPartPos_y * x * SIZE_Y) << "\n";
         
-
-        for (int j = 0; SIZE_X > j; j++)
-        {
-
-            double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
-            grid[j][i][0] = vector[0];
-            grid[j][i][1] = vector[1];
-            delete vector;
-
-
-        }
-    }
-    */
-
-    for (int i = 0; subsections_y > i; i++)
+    for (int k = 0; SIZE_Y > k; k++)
     {
-        mt_rng.discard(mapPartPos_y * x * SIZE_Y);
         for (int j = 0; subsections_x > j; j++)
         {
-            for (int k = 0; SIZE_Y > k; k++)
-            {
-                if (j < mapPartPos_x) mt_rng.discard(SIZE_X);
 
-                if (j == mapPartPos_x)
+            if (j < mapPartPos_x)
+            {
+                std::cout << "k: " << k << " j: " << j << ". Discards (lower): " << SIZE_X << "\n";
+                //mt_rng.discard(SIZE_X);
+            }
+
+            if (j == mapPartPos_x)
+            {
+                for (int l = 0; SIZE_X > l; l++)
                 {
-                    for (int l = 0; SIZE_X > l; l++)
-                    {
-                        double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
-                        grid[l][k][0] = vector[0];
-                        grid[l][k][1] = vector[1];
-                        delete vector;
-                    }
+
+                    double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
+                    grid[l][k][0] = vector[0];
+                    grid[l][k][1] = vector[1];
+                    delete vector;
+                        
                 }
 
-                if (j > mapPartPos_x && i == mapPartPos_y) mt_rng.discard(SIZE_X);
+                std::cout << "k: " << k << " j: " << j << ". Assignments: " << SIZE_X << "\n";
             }
-        }
-        if (i == mapPartPos_y) return;
-    }
 
+            if (j > mapPartPos_x)
+            {
+                std::cout << "k: " << k << " j: " << j << ". Discards (upper): " << SIZE_X << "\n";
+                //mt_rng.discard(SIZE_X);
+            }
+
+        }
+        std::cout << "\n\n";
+    }
 };
 
 

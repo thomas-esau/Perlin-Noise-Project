@@ -9,6 +9,7 @@ void PerlinMap<T>::calcMap()
 
 		for (int j = 0; j < SUBSECTIONS_X; j++)
 		{
+			std::cout << "createGridPart" << "\n";
 			mapPart[j][i].createGridPart(SIZE_X, SIZE_Y, SUBSECTIONS_X, SUBSECTIONS_Y);
 			//mapPart[j][i].createGrid();
 			std::string filename = "x" + std::to_string(j) + "y" + std::to_string(i);
