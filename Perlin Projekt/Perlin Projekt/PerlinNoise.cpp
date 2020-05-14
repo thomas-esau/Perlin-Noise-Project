@@ -287,30 +287,32 @@ void PerlinNoise2D_MEM::createGridPart(uint32_t wholeMap_size_x, uint32_t wholeM
                 visited_j = true;
                 for (int l = 0; SIZE_X > l; l++)
                 {
-                    bool mapBorder_x_reached = mapPartPos_x == SUBSECTIONS_X - 1 && SIZE_X - 1 == l;
-                    bool mapBorder_y_reached = mapPartPos_y == SUBSECTIONS_Y - 1 && SIZE_Y - 1 == k;
-
-                    if (mapBorder_x_reached)
-                    {
-                        std::mt19937 mt_border_x(SEED);
-                        mt_border_x.discard((mapPartPos_y * adjusted_size_x * adjusted_size_y * SUBSECTIONS_X)+((l+1) * (wholeMap_size_x - 1)));
-                        double* vector = calcUnitVector(0.0, 0.0, float_range(mt_border_x));
-                        grid[l][k][0] = vector[0];
-                        grid[l][k][1] = vector[1];
-                        delete vector;
-                        continue;
-                    }
-
-                    if (mapBorder_y_reached)
-                    {
-                        std::mt19937 mt_border_y(SEED);
-                        mt_border_y.discard(mapPartPos_x * adjusted_size_x);
-                        double* vector = calcUnitVector(0.0, 0.0, float_range(mt_border_y));
-                        grid[l][k][0] = vector[0];
-                        grid[l][k][1] = vector[1];
-                        delete vector;
-                        continue;
-                    }
+                    //bool mapBorder_x_reached = mapPartPos_x == SUBSECTIONS_X - 1 && SIZE_X - 1 == l;
+                    //bool mapBorder_y_reached = mapPartPos_y == SUBSECTIONS_Y - 1 && SIZE_Y - 1 == k;
+                    //if (mapBorder_x_reached && SUBSECTIONS_X != 1)
+                    //{
+                    //    std::mt19937 mt_border_x(SEED);
+                    //    uint32_t discards = mapPartPos_y * adjusted_size_x * adjusted_size_y * SUBSECTIONS_X + k * adjusted_size_x * SUBSECTIONS_X;
+                    //    mt_border_x.discard(discards);
+                    //    //std::cout << "{" << objectID << "}borderx reached. discards: "<< discards << "\n";
+                    //    double* vector = calcUnitVector(0.0, 0.0, float_range(mt_border_x));
+                    //    grid[l][k][0] = vector[0];
+                    //    grid[l][k][1] = vector[1];
+                    //    delete vector;
+                    //    continue;
+                    //}
+                    //if (mapBorder_y_reached && SUBSECTIONS_Y != 1)
+                    //{
+                    //    std::mt19937 mt_border_y(SEED);
+                    //    uint32_t discards = l;
+                    //    mt_border_y.discard(discards);
+                    //    std::cout << "{" << objectID << "}bordery reached. discards: " << discards << "\n";
+                    //    double* vector = calcUnitVector(0.0, 0.0, float_range(mt_border_y));
+                    //    grid[l][k][0] = vector[0];
+                    //    grid[l][k][1] = vector[1];
+                    //    delete vector;
+                    //    continue;
+                    //}
                     double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
                     grid[l][k][0] = vector[0];
                     grid[l][k][1] = vector[1];
