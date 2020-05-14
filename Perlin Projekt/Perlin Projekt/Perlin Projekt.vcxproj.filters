@@ -36,7 +36,7 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="PerlinNoise.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Quelldateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

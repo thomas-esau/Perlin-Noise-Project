@@ -1,87 +1,109 @@
 #include "PerlinNoise.h"
+#include <thread>
 
 int PerlinNoise2D_MEM::objectCount{ 0 };
 void PerlinNoise2D::createPPMFile(std::string filename, PerlinModifiers mod)
 {
+    uint32_t mapPartPos_x = (objectID - 1) % SUBSECTIONS_X;
+    uint32_t mapPartPos_y = (int)((objectID - 1) / SUBSECTIONS_X);
+    uint32_t sz_x = mapPartPos_x == SUBSECTIONS_X - 1 ?  SIZE_X / mod.scale_x : (SIZE_X-1) / mod.scale_x;
+    uint32_t sz_y = mapPartPos_y == SUBSECTIONS_Y - 1 ? SIZE_Y / mod.scale_y : (SIZE_Y-1) /mod.scale_x;
     std::cout << "Create .ppm file...\n";
     std::ofstream ofs;
+    std::ofstream file;
     ofs.open("./Output/"+filename+".ppm", std::ios::out | std::ios::binary);
-    ofs << "P6\n" << SIZE_X << " " << SIZE_Y << "\n255\n";
-    for (int i = 0; i < SIZE_Y; ++i) {
-        for (int j = 0; j < SIZE_X; ++j)
+    file.open("./Output/" + filename + "_output.txt");
+    file << "Calculations\n";
+    ofs << "P6\n" << sz_x << " " << sz_y << "\n255\n";
+    for (int i = 0; i < sz_y; ++i) {
+        for (int j = 0; j < sz_x; ++j)
         {
-
             double perlinValue;
             if (mod.grayscales == 1)
-                perlinValue = (noise(( (j + offset_x) * mod.scale_x), ((i + offset_y) * mod.scale_y)) + mod.height) * mod.amplitude;
+                perlinValue = (noise(( (j + 0) * mod.scale_x), ((i + 0) * mod.scale_y)) + mod.height) * mod.amplitude;
             else
-                perlinValue = (int)((noise(((j + offset_x) * mod.scale_x), ((i + offset_y) * mod.scale_y)) + mod.height) * mod.amplitude);
+                perlinValue = (int)((noise(((j + 0) * mod.scale_x), ((i + 0) * mod.scale_y)) + mod.height) * mod.amplitude);
             unsigned char n = static_cast<unsigned char>(perlinValue * 255 / mod.grayscales);
             ofs << n << n << n;
+            //file << "x"<<(j) * mod.scale_x << "y" << (i) * mod.scale_y << ":" << perlinValue << " ";
+            
+                int x0 = (int)(j * mod.scale_x);
+                int y0 = (int)(i * mod.scale_y);
+                int x1 = x0 + 1;
+                int y1 = y0 + 1;
+                double* x0y0 = getVector(x0, y0), * x1y0 = getVector(x1, y0), * x0y1 = getVector(x0, y1), * x1y1 = getVector(x1, y1);
+                //std::cout << "BugAnalysis. x" << j * mod.scale_x << "y" << i * mod.scale_y << ": " << x0y0[0] << "/" << x1y0[0] << "/" << x0y1[0] << "/" << x1y1[0] << "=" << perlinValue;
+                file << "x" << (j)*mod.scale_x << "y" << (i)*mod.scale_y << "v[x]" << x0y0[0] << "v[y]" << x0y0[1] <<"p[V]"  << perlinValue <<" ";
+                delete x0y0;
+                delete x1y0;
+                delete x0y1;
+                delete x1y1;
         }
+        file << "\n";
     }
     ofs.close();
     std::cout << ".ppm file was successfully created.\n";
 }
 
 
-void PerlinNoise2D::drawNoise(unsigned int width, unsigned int height, PerlinModifiers mod)
-{
-    sf::RenderWindow window(sf::VideoMode(width, height), "SFML works!");
-    sf::Image perlinnoise;
-    perlinnoise.create(width, height);
-    
-    sf::Texture text;
-    text.loadFromImage(perlinnoise);
-    sf::Sprite sprite;
-    sprite.setTexture(text, true);
-
-    std::mt19937 random_mod(2000);
-    std::uniform_real_distribution<double> double_range(-0.05, 0.05);
-
-
-    while (window.isOpen())
-    {
-        
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        
-        
-        for (int i = 0; i < height;i++)
-        {
-            for (int j = 0; j < width;j++)
-            { 
-                //mod = double_range(random_mod);
-                double perlinValue;
-                if (mod.grayscales == 1)
-                {
-                    perlinValue = (noise(((j + offset_x)  * mod.scale_x) , ((i + offset_y) * mod.scale_y) ) + mod.height) * mod.amplitude;
-                }
-                else
-                {
-                    perlinValue = (int)((noise(((j + offset_x) * mod.scale_x) , ((i + offset_y) * mod.scale_y) ) + mod.height) * mod.amplitude);
-                }
-                perlinnoise.setPixel(j, i , sf::Color(perlinValue * mod.grayscales * 2, perlinValue* mod.grayscales * 2, perlinValue* mod.grayscales * 2));
-
-            }
-        }
-        text.loadFromImage(perlinnoise);
-        sprite.setTexture(text, true);
-        window.clear();
-        window.draw(sprite);
-        window.display();
-
-        //Parameter, die verändert werden
-        //amp *= 0.999;
-        //mod.scale_x *= 0.99;
-        //magy *= 0.99;
-    }
-}
+// offset_x und offset_y müssen entfernt werden.
+//void PerlinNoise2D::drawNoise(unsigned int width, unsigned int height, PerlinModifiers mod)
+//{
+//    sf::RenderWindow window(sf::VideoMode(width, height), "SFML works!");
+//    sf::Image perlinnoise;
+//    perlinnoise.create(width, height);
+//    
+//    sf::Texture text;
+//    text.loadFromImage(perlinnoise);
+//    sf::Sprite sprite;
+//    sprite.setTexture(text, true);
+//
+//    std::mt19937 random_mod(2000);
+//    std::uniform_real_distribution<double> double_range(-0.05, 0.05);
+//
+//
+//    while (window.isOpen())
+//    {
+//        
+//        sf::Event event;
+//        while (window.pollEvent(event))
+//        {
+//            if (event.type == sf::Event::Closed)
+//                window.close();
+//        }
+//
+//        
+//        
+//        for (int i = 0; i < height;i++)
+//        {
+//            for (int j = 0; j < width;j++)
+//            { 
+//                //mod = double_range(random_mod);
+//                double perlinValue;
+//                if (mod.grayscales == 1)
+//                {
+//                    perlinValue = (noise(((j + offset_x)  * mod.scale_x) , ((i + offset_y) * mod.scale_y) ) + mod.height) * mod.amplitude;
+//                }
+//                else
+//                {
+//                    perlinValue = (int)((noise(((j + offset_x) * mod.scale_x) , ((i + offset_y) * mod.scale_y) ) + mod.height) * mod.amplitude);
+//                }
+//                perlinnoise.setPixel(j, i , sf::Color(perlinValue * mod.grayscales * 2, perlinValue* mod.grayscales * 2, perlinValue* mod.grayscales * 2));
+//
+//            }
+//        }
+//        text.loadFromImage(perlinnoise);
+//        sprite.setTexture(text, true);
+//        window.clear();
+//        window.draw(sprite);
+//        window.display();
+//
+//        //Parameter, die verändert werden
+//        //amp *= 0.999;
+//        //mod.scale_x *= 0.99;
+//        //magy *= 0.99;
+//    }
+//}
 
 // Lineare Interpolation
 inline double PerlinNoise2D::lerp(double lo, double hi, double t)
@@ -156,7 +178,7 @@ std::string PerlinNoise2D::toString()
 {
 
     std::string output = "SIZE_X: " + std::to_string(SIZE_X) + " // SIZE_Y: " + std::to_string(SIZE_Y) + 
-        " // OFFSET_X: " + std::to_string(offset_x) + " // OFFSET_Y: " + std::to_string(offset_y);
+        " // Subsections_X: " + std::to_string(SUBSECTIONS_X) + " // Subsections_Y: " + std::to_string(SUBSECTIONS_Y);
     return output;
 };
 
@@ -233,55 +255,65 @@ void PerlinNoise2D_MEM::createGrid()
     }
 };
 
-void PerlinNoise2D_MEM::createGridPart(uint32_t x, uint32_t y, uint32_t subsections_x, uint32_t subsections_y)
-{
-    uint32_t mapPartPos_x = (objectID - 1) % subsections_x;
-    uint32_t mapPartPos_y = (int)((objectID - 1) / subsections_x);
 
-    std::cout << "x: " << mapPartPos_x << " y: " << mapPartPos_y << "\n";
+void PerlinNoise2D_MEM::createGridPart(uint32_t wholeMap_size_x, uint32_t wholeMap_size_y)
+{
+    uint32_t mapPartPos_x = (objectID - 1) % SUBSECTIONS_X;
+    uint32_t mapPartPos_y = (int)((objectID - 1) / SUBSECTIONS_X);
+    uint32_t adjusted_size_x = SUBSECTIONS_X - 1 == mapPartPos_x ? SIZE_X : SIZE_X - 1;
+    uint32_t adjusted_size_y = SUBSECTIONS_Y - 1 == mapPartPos_y ? SIZE_Y : SIZE_Y - 1;
+
+    std::cout << "wholeMap_size_x: " << mapPartPos_x << " wholeMap_size_y: " << mapPartPos_y << "\n";
 
 
     //mt_rng.discard(SIZE_X);
-    mt_rng.discard(mapPartPos_y * x * SIZE_Y);
-    std::cout << "Beginning Discards: " << (mapPartPos_y * x * SIZE_Y) << "\n";
-        
+    mt_rng.discard(mapPartPos_y * adjusted_size_x * adjusted_size_y * SUBSECTIONS_X);
+    std::cout << "Beginning Discards: " << (mapPartPos_y * wholeMap_size_x * SIZE_Y) << "\n";
+
     for (int k = 0; SIZE_Y > k; k++)
     {
-        for (int j = 0; subsections_x > j; j++)
+        
+        bool visited_j = false;
+        for (int j = 0; SUBSECTIONS_X > j; j++)
         {
-
+            std::cout << "{" << objectID << "}LOOPBEGIN: j: " << j << " k:" << k <<"\n";
             if (j < mapPartPos_x)
             {
-                std::cout << "k: " << k << " j: " << j << ". Discards (lower): " << SIZE_X << "\n";
-                //mt_rng.discard(SIZE_X);
+                mt_rng.discard(adjusted_size_x);
+                std::cout << "{" << objectID << "}: j<: " << adjusted_size_x << "\n";
             }
 
             if (j == mapPartPos_x)
             {
+                visited_j = true;
                 for (int l = 0; SIZE_X > l; l++)
                 {
-
                     double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
                     grid[l][k][0] = vector[0];
                     grid[l][k][1] = vector[1];
                     delete vector;
-                        
-                }
 
-                std::cout << "k: " << k << " j: " << j << ". Assignments: " << SIZE_X << "\n";
+                }
+                std::cout << "{" << objectID << "}: j==: " << SIZE_X << "\n";
             }
 
             if (j > mapPartPos_x)
             {
-                std::cout << "k: " << k << " j: " << j << ". Discards (upper): " << SIZE_X << "\n";
-                //mt_rng.discard(SIZE_X);
+                std::cout << "{" << objectID << "}: j>: " << (visited_j ? adjusted_size_x - 1 : adjusted_size_x) << (visited_j ? " visited_j" : "!visited_j") << "\n";
+                mt_rng.discard(visited_j ? SIZE_X - 2 : SIZE_X );
+                visited_j = false;
             }
 
         }
-        std::cout << "\n\n";
+        //std::cout << "\n\n";
     }
 };
 
+std::string PerlinNoise2D_MEM::toString()
+{
+    std::string output = "ID: " + std::to_string(objectID) + " " + PerlinNoise2D::toString();
+    return output;
+};
 
 void PerlinNoise2D_MEM::dumpGrid()
 {
@@ -294,56 +326,85 @@ void PerlinNoise2D_MEM::dumpGrid()
         for (int j = 0; j < SIZE_X; j++)
         {
             double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
-            myfile << grid[j][i][0] << " " << grid[j][i][1] << "\n";
+            myfile << "x"<<j<<"y"<<i <<"="<< grid[j][i][0] << ";" << grid[j][i][1] << " | ";
         }
+        myfile << "\n";
     }
     myfile.close();
-    std::cout << "Grid (FILE) successfully created.\n";
 };
 
 
 
-/*
-for (int k = 0; SIZE_Y > k; k++)
-{
-    for (int l = 0; SIZE_X > l; l++)
-    {
-        if (j < mapPartPos_x && i == mapPartPos_y) mt_rng.discard(SIZE_X);
-        if (j == mapPartPos_x && i == mapPartPos_y)
-        {
-            double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
-            grid[j][i][0] = vector[0];
-            grid[j][i][1] = vector[1];
-            delete vector;
-        }
-        if (j > mapPartPos_x && i == mapPartPos_y) mt_rng.discard(SIZE_X);
-    }
-}
 
+//void PerlinNoise2D::threadTask(int i)
+//{
+//    std::cout << "Worker has been started. ID: "<< i << "\n";
+//
+//};
+//
+//
+//void PerlinNoise2D::threadWorker()
+//{
+//    //std::thread worker[SUBSECTIONS_X][SUBSECTIONS_Y];
+//    std::thread worker((&PerlinNoise2D::threadTask), this, 4);
+//    //worker = std::thread(threadTask);
+//    worker.join();
+//};
 
-
-
-
-if (j == mapPartPos_x && i == mapPartPos_y)
-{
-    if (j < mapPartPos_x) mt_rng.discard(SIZE_X);
-    for (int k = 0; SIZE_Y > k; k++)
-    {
-
-        for (int l = 0; SIZE_X > l; l++)
-        {
-            if (j < mapPartPos_x) mt_rng.discard(SIZE_X);
-            if (j == mapPartPos_x)
-            {
-                double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
-                grid[j][i][0] = vector[0];
-                grid[j][i][1] = vector[1];
-                delete vector;
-            }
-            if (j > mapPartPos_x && i == mapPartPos_y) mt_rng.discard(SIZE_X);
-        }
-    }
-
-    break;
-}
-*/
+//void PerlinNoise2D_MEM::createGridPart(uint32_t wholeMap_size_x, uint32_t wholeMap_size_y)
+//{
+//    uint32_t mapPartPos_x = (objectID - 1) % SUBSECTIONS_X;
+//    uint32_t mapPartPos_y = (int)((objectID - 1) / SUBSECTIONS_X);
+//    uint32_t adjusted_size_x = SUBSECTIONS_X - 1 == mapPartPos_x ? SIZE_X : SIZE_X - 1;
+//    uint32_t adjusted_size_y = SUBSECTIONS_Y - 1 == mapPartPos_y ? SIZE_Y : SIZE_Y - 1;
+//
+//    std::cout << "wholeMap_size_x: " << mapPartPos_x << " wholeMap_size_y: " << mapPartPos_y << "\n";
+//
+//
+//    //mt_rng.discard(SIZE_X);
+//    mt_rng.discard(mapPartPos_y * adjusted_size_x * adjusted_size_y * SUBSECTIONS_X);
+//    std::cout << "Beginning Discards: " << (mapPartPos_y * wholeMap_size_x * SIZE_Y) << "\n";
+//
+//    for (int k = 0; SIZE_Y > k; k++)
+//    {
+//
+//        bool visited_j = false;
+//        for (int j = 0; SUBSECTIONS_X > j; j++)
+//        {
+//            std::cout << "{" << objectID << "}LOOPBEGIN: j: " << j << " k:" << k << "\n";
+//            if (j < mapPartPos_x)
+//            {
+//                mt_rng.discard(adjusted_size_x);
+//                std::cout << "{" << objectID << "}: j<: " << adjusted_size_x << "\n";
+//            }
+//
+//            if (j == mapPartPos_x)
+//            {
+//                visited_j = true;
+//                for (int l = 0; SIZE_X > l; l++)
+//                {
+//                    bool mapBorder_x_reached = mapPartPos_x == SUBSECTIONS_X - 1 && SIZE_X - 1 == l;
+//                    if (mapBorder_x_reached)
+//                    {
+//                        grid
+//                    }
+//                    double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
+//                    grid[l][k][0] = vector[0];
+//                    grid[l][k][1] = vector[1];
+//                    delete vector;
+//
+//                }
+//                std::cout << "{" << objectID << "}: j==: " << SIZE_X << "\n";
+//            }
+//
+//            if (j > mapPartPos_x)
+//            {
+//                std::cout << "{" << objectID << "}: j>: " << (visited_j ? adjusted_size_x - 1 : adjusted_size_x) << (visited_j ? " visited_j" : "!visited_j") << "\n";
+//                mt_rng.discard(visited_j ? SIZE_X - 2 : SIZE_X);
+//                visited_j = false;
+//            }
+//
+//        }
+//        //std::cout << "\n\n";
+//    }
+//};
