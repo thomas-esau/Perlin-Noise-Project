@@ -6,8 +6,10 @@ void PerlinNoise2D::createPPMFile(std::string filename, PerlinModifiers mod)
 {
     uint32_t mapPartPos_x = (objectID - 1) % SUBSECTIONS_X;
     uint32_t mapPartPos_y = (int)((objectID - 1) / SUBSECTIONS_X);
-    uint32_t sz_x = mapPartPos_x == SUBSECTIONS_X - 1 ?  SIZE_X / mod.scale_x : (SIZE_X-1) / mod.scale_x;
-    uint32_t sz_y = mapPartPos_y == SUBSECTIONS_Y - 1 ? SIZE_Y / mod.scale_y : (SIZE_Y-1) /mod.scale_x;
+    //uint32_t sz_x = mapPartPos_x == SUBSECTIONS_X - 1 ? SIZE_X / mod.scale_x : (SIZE_X-1) / mod.scale_x;
+    //uint32_t sz_y = mapPartPos_y == SUBSECTIONS_Y - 1 ? SIZE_Y / mod.scale_y : (SIZE_Y-1) /mod.scale_x;
+    uint32_t sz_x = SUBSECTIONS_X == 1 ? SIZE_X / mod.scale_x : (SIZE_X - 1) / mod.scale_x;
+    uint32_t sz_y = SUBSECTIONS_Y == 1 ? SIZE_Y / mod.scale_y : (SIZE_Y - 1) / mod.scale_y;
     std::cout << "Create .ppm file...\n";
     std::ofstream ofs;
     std::ofstream file;
@@ -46,7 +48,7 @@ void PerlinNoise2D::createPPMFile(std::string filename, PerlinModifiers mod)
 }
 
 
-// offset_x und offset_y müssen entfernt werden.
+// offset_x und offset_y mï¿½ssen entfernt werden.
 //void PerlinNoise2D::drawNoise(unsigned int width, unsigned int height, PerlinModifiers mod)
 //{
 //    sf::RenderWindow window(sf::VideoMode(width, height), "SFML works!");
@@ -98,7 +100,7 @@ void PerlinNoise2D::createPPMFile(std::string filename, PerlinModifiers mod)
 //        window.draw(sprite);
 //        window.display();
 //
-//        //Parameter, die verändert werden
+//        //Parameter, die verï¿½ndert werden
 //        //amp *= 0.999;
 //        //mod.scale_x *= 0.99;
 //        //magy *= 0.99;
@@ -143,7 +145,7 @@ double PerlinNoise2D::noise(double x, double y)
 
     
 
-    // Gewichte für x und y, um Kurve zu glätten
+    // Gewichte fï¿½r x und y, um Kurve zu glï¿½tten
     double sx = x - (double)x0;
     double sy = y - (double)y0;
 
@@ -288,6 +290,45 @@ void PerlinNoise2D_MEM::createGridPart(uint32_t wholeMap_size_x, uint32_t wholeM
                 visited_j = true;
                 for (int l = 0; SIZE_X > l; l++)
                 {
+                    bool mapBorder_x_reached = mapPartPos_x == SUBSECTIONS_X - 1 && SIZE_X - 1 == l;
+                    bool mapBorder_y_reached = mapPartPos_y == SUBSECTIONS_Y - 1 && SIZE_Y - 1 == k;
+                    bool isMapPart_x = SUBSECTIONS_X != 1;
+                    bool isMapPart_y = SUBSECTIONS_Y != 1;
+                    
+                    if (mapBorder_x_reached && mapBorder_y_reached && l == adjusted_size_x && k == adjusted_size_y)
+                    {
+                        std::mt19937 mt_border_xy(SEED);
+                        double* vector = calcUnitVector(0.0, 0.0, float_range(mt_border_xy));
+                        grid[l][k][0] = vector[0];
+                        grid[l][k][1] = vector[1];
+                        delete vector;
+                        continue;
+                    }
+                    
+                    if (mapBorder_x_reached && isMapPart_x)
+                    {
+                        std::mt19937 mt_border_x(SEED);
+                        uint32_t discards = mapPartPos_y * adjusted_size_x * adjusted_size_y * SUBSECTIONS_X + k * adjusted_size_x * SUBSECTIONS_X;
+                        mt_border_x.discard(discards);
+                        //std::cout << "{" << objectID << "}borderx reached. discards: "<< discards << "\n";
+                        double* vector = calcUnitVector(0.0, 0.0, float_range(mt_border_x));
+                        grid[l][k][0] = vector[0];
+                        grid[l][k][1] = vector[1];
+                        delete vector;
+                        continue;
+                    }
+                    if (mapBorder_y_reached && isMapPart_y)
+                    {
+                        std::mt19937 mt_border_y(SEED);
+                        uint32_t discards = (mapPartPos_x * adjusted_size_x)+l;
+                        mt_border_y.discard(discards);
+                        std::cout << "{" << objectID << "}bordery reached. discards: " << discards << "\n";
+                        double* vector = calcUnitVector(0.0, 0.0, float_range(mt_border_y));
+                        grid[l][k][0] = vector[0];
+                        grid[l][k][1] = vector[1];
+                        delete vector;
+                        continue;
+                    }
                     double* vector = calcUnitVector(0.0, 0.0, float_range(mt_rng));
                     grid[l][k][0] = vector[0];
                     grid[l][k][1] = vector[1];

@@ -4,24 +4,24 @@ C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Proj
 C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.h(100,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
 C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.h(102,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
 C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(4,35): warning C4356: "PerlinNoise2D::objectCount": Statisches Datenmember darf nicht über eine abgeleitete Klasse initialisiert werden
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(9,19): warning C4244: "Initialisierung": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(10,19): warning C4244: "Initialisierung": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(18,23): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(19,27): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(224,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(226,27): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(246,28): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(248,32): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(273,28): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(277,39): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(280,19): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(289,40): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(300,19): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(324,23): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(326,27): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(11,19): warning C4244: "Initialisierung": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(12,19): warning C4244: "Initialisierung": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(20,23): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(21,27): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(226,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(228,27): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(248,28): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(250,32): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(275,28): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(279,39): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(282,19): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(291,40): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(341,19): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(365,23): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\PerlinNoise.cpp(367,27): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
   Code wird generiert.
-  1 of 349 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+  4 of 349 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    4 functions had inline decision re-evaluated but remain unchanged
   Codegenerierung ist abgeschlossen.
   Perlin Projekt.vcxproj -> C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Release\Perlin Projekt.exe
