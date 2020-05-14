@@ -20,7 +20,7 @@ int main()
     // Perlin Noise Parameter
 
     const uint32_t SIZE_X = 16, SIZE_Y = 16;
-    const uint32_t SUBSECTIONS_X = 1, SUBSECTIONS_Y = 1;
+    const uint32_t SUBSECTIONS_X = 2, SUBSECTIONS_Y = 2;
     const uint32_t SEED = 2020;
     PerlinModifiers mod;
 
