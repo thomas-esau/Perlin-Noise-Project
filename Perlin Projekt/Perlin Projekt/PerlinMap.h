@@ -45,9 +45,9 @@ public:
 				uint32_t mapPart_size_x = sub_size_x + 1;
 				uint32_t mapPart_size_y = sub_size_y + 1;
 
-				if (j == SUBSECTIONS_X - 1)
+				if (SUBSECTIONS_X == 1)
 					mapPart_size_x--;
-				if (i == SUBSECTIONS_Y - 1)
+				if (SUBSECTIONS_Y == 1)
 					mapPart_size_y--;
 
 				row.push_back(T(mapPart_size_x, mapPart_size_y, SUBSECTIONS_X, SUBSECTIONS_Y, SEED));

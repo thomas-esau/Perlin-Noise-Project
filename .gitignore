@@ -2,3 +2,6 @@
 *.dll
 /Perlin Projekt/.vs
 /Perlin Projekt/Perlin Projekt/Output
+*.obj
+*.pdb
+*.exe

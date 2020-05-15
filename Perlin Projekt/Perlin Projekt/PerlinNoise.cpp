@@ -8,8 +8,8 @@ void PerlinNoise2D::createPPMFile(std::string filename, PerlinModifiers mod)
     uint32_t mapPartPos_y = (int)((objectID - 1) / SUBSECTIONS_X);
     //uint32_t sz_x = mapPartPos_x == SUBSECTIONS_X - 1 ? SIZE_X / mod.scale_x : (SIZE_X-1) / mod.scale_x;
     //uint32_t sz_y = mapPartPos_y == SUBSECTIONS_Y - 1 ? SIZE_Y / mod.scale_y : (SIZE_Y-1) /mod.scale_x;
-    uint32_t sz_x = SUBSECTIONS_X == 1 ? SIZE_X / mod.scale_x : (SIZE_X - 1) / mod.scale_x;
-    uint32_t sz_y = SUBSECTIONS_Y == 1 ? SIZE_Y / mod.scale_y : (SIZE_Y - 1) / mod.scale_y;
+    uint32_t sz_x = SUBSECTIONS_X > 1 ? (SIZE_X - 1) / mod.scale_x : SIZE_X / mod.scale_x ;
+    uint32_t sz_y = SUBSECTIONS_Y > 1 ? (SIZE_Y - 1) / mod.scale_y : SIZE_Y / mod.scale_y;
     std::cout << "Create .ppm file...\n";
     std::ofstream ofs;
     std::ofstream file;
@@ -262,8 +262,8 @@ void PerlinNoise2D_MEM::createGridPart(uint32_t wholeMap_size_x, uint32_t wholeM
 {
     uint32_t mapPartPos_x = (objectID - 1) % SUBSECTIONS_X;
     uint32_t mapPartPos_y = (int)((objectID - 1) / SUBSECTIONS_X);
-    uint32_t adjusted_size_x = SUBSECTIONS_X - 1 == mapPartPos_x ? SIZE_X : SIZE_X - 1;
-    uint32_t adjusted_size_y = SUBSECTIONS_Y - 1 == mapPartPos_y ? SIZE_Y : SIZE_Y - 1;
+    uint32_t adjusted_size_x = SUBSECTIONS_X > 1 ? SIZE_X - 1 : SIZE_X;
+    uint32_t adjusted_size_y = SUBSECTIONS_Y > 1 ? SIZE_Y - 1 : SIZE_Y;
 
     std::cout << "wholeMap_size_x: " << mapPartPos_x << " wholeMap_size_y: " << mapPartPos_y << "\n";
 
