@@ -7,6 +7,7 @@
 
 *getVector: Wenn Subsections durchlaufen werden, entsteht ein Überlauf.
 
-*Multithreading: https://www.youtube.com/watch?v=wXBcwHwIt_I#
 *PerlinNoise2D: Trennung von Berechnung und Kartenlogik
 *In PerlinNoise2D.cpp: SUBSECTIONS_X und Y statisch machen
+*ObjectID -> ObjectNr umbenennung
+*PerlinMap: constructMaps: Funktionsparameter ändern: Welche Variable wird nur einmal benötigt, welche als Member?

@@ -9,7 +9,7 @@ class PerlinMap
 {
 public:
 
-	PerlinMap(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_SUBSECTIONS_X, uint32_t init_SUBSECTIONS_Y, uint32_t init_SEED) :
+	PerlinMap(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_SUBSECTIONS_X, uint32_t init_SUBSECTIONS_Y, uint32_t discards, uint32_t amount , uint32_t init_SEED) :
 		SIZE_X{ init_SIZE_X }, SIZE_Y{ init_SIZE_Y }, SUBSECTIONS_X{ init_SUBSECTIONS_X }, SUBSECTIONS_Y{ init_SUBSECTIONS_Y }, SEED{ init_SEED }
 	{
 		//PerlinNoiseArray
@@ -24,7 +24,7 @@ public:
 
 		
 
-		constructMapParts();
+		constructMapParts(discards, amount);
 
 		worker = new std::thread[SUBSECTIONS_X * SUBSECTIONS_Y];
 
@@ -33,26 +33,43 @@ public:
 	void calcMap();
 	bool isSplittedMap() { return SUBSECTIONS_X == 1 && SUBSECTIONS_Y == 1 ? false : true; };
 	void setMods(PerlinModifiers setMod) { mod = setMod; };
-	void constructMapParts()
+	void constructMapParts(uint32_t discards, uint32_t amount)
 	{
 		for (int i = 0; i < SUBSECTIONS_Y; i++)
 		{
 			std::vector<T> row;
 			for (int j = 0; j < SUBSECTIONS_X; j++)
 			{
-				int mapPart_offset_x = sub_size_x / SUBSECTIONS_X * j;
-				int mapPart_offset_y = sub_size_y / SUBSECTIONS_Y * i;
-				uint32_t mapPart_size_x = sub_size_x + 1;
-				uint32_t mapPart_size_y = sub_size_y + 1;
+				if (discards > 0)
+				{
+					row.push_back(NULL);
+					T::skipObjectCount();
+					discards--;
+					std::cout <<"Skip Object initialization." << "\n";
+					continue;
+					
+				}
 
-				if (SUBSECTIONS_X == 1)
-					mapPart_size_x--;
-				if (SUBSECTIONS_Y == 1)
-					mapPart_size_y--;
+				if (amount > 0)
+				{
 
-				row.push_back(T(mapPart_size_x, mapPart_size_y, SUBSECTIONS_X, SUBSECTIONS_Y, SEED));
-				std::string filename = "x" + std::to_string(j) + "y" + std::to_string(i);
-				std::cout << row[j].toString() << "\n";
+					int mapPart_offset_x = sub_size_x / SUBSECTIONS_X * j;
+					int mapPart_offset_y = sub_size_y / SUBSECTIONS_Y * i;
+					uint32_t mapPart_size_x = sub_size_x + 1;
+					uint32_t mapPart_size_y = sub_size_y + 1;
+
+					if (SUBSECTIONS_X == 1)
+						mapPart_size_x--;
+					if (SUBSECTIONS_Y == 1)
+						mapPart_size_y--;
+
+					
+					row.push_back(T(mapPart_size_x, mapPart_size_y, SUBSECTIONS_X, SUBSECTIONS_Y, SEED));
+					amount--;
+					
+					std::string filename = "x" + std::to_string(j) + "y" + std::to_string(i);
+					std::cout << row[j].toString() << "\n";
+				}
 			}
 			mapPart.push_back(row);
 		}

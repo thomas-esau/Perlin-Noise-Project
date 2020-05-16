@@ -43,8 +43,8 @@ public:
 	void drawNoise(unsigned int width, unsigned int height, PerlinModifiers mod);
 	std::string toString();
 	std::mt19937& getRNG() { return mt_rng; };
-	void printRNG() { std::cout << float_range(mt_rng) << "\n"; }
-	
+	void printRNG() { std::cout << float_range(mt_rng) << "\n"; };
+	static void skipObjectCount() { objectCount++; };
 	//void threadTask(int i);
 	//void threadWorker();
 
@@ -111,6 +111,7 @@ public:
 	void createGridPart(uint32_t wholeMap_size_x, uint32_t wholeMap_size_y);
 	void dumpGrid();
 	std::string toString();
+	
 
 	// Overridden Functions
 	/*void resetPerlinNoise2D(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_SEED) override

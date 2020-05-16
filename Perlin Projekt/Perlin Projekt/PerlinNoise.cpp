@@ -265,12 +265,12 @@ void PerlinNoise2D_MEM::createGridPart(uint32_t wholeMap_size_x, uint32_t wholeM
     uint32_t adjusted_size_x = SUBSECTIONS_X > 1 ? SIZE_X - 1 : SIZE_X;
     uint32_t adjusted_size_y = SUBSECTIONS_Y > 1 ? SIZE_Y - 1 : SIZE_Y;
 
-    std::cout << "wholeMap_size_x: " << mapPartPos_x << " wholeMap_size_y: " << mapPartPos_y << "\n";
+    //std::cout << "wholeMap_size_x: " << mapPartPos_x << " wholeMap_size_y: " << mapPartPos_y << "\n";
 
 
     //mt_rng.discard(SIZE_X);
     mt_rng.discard(mapPartPos_y * adjusted_size_x * adjusted_size_y * SUBSECTIONS_X);
-    std::cout << "Beginning Discards: " << (mapPartPos_y * wholeMap_size_x * SIZE_Y) << "\n";
+    //std::cout << "Beginning Discards: " << (mapPartPos_y * wholeMap_size_x * SIZE_Y) << "\n";
 
     for (int k = 0; SIZE_Y > k; k++)
     {
@@ -278,11 +278,11 @@ void PerlinNoise2D_MEM::createGridPart(uint32_t wholeMap_size_x, uint32_t wholeM
         bool visited_j = false;
         for (int j = 0; SUBSECTIONS_X > j; j++)
         {
-            std::cout << "{" << objectID << "}LOOPBEGIN: j: " << j << " k:" << k <<"\n";
+            //std::cout << "{" << objectID << "}LOOPBEGIN: j: " << j << " k:" << k <<"\n";
             if (j < mapPartPos_x)
             {
                 mt_rng.discard(adjusted_size_x);
-                std::cout << "{" << objectID << "}: j<: " << adjusted_size_x << "\n";
+                //std::cout << "{" << objectID << "}: j<: " << adjusted_size_x << "\n";
             }
 
             if (j == mapPartPos_x)
@@ -322,7 +322,7 @@ void PerlinNoise2D_MEM::createGridPart(uint32_t wholeMap_size_x, uint32_t wholeM
                         std::mt19937 mt_border_y(SEED);
                         uint32_t discards = (mapPartPos_x * adjusted_size_x)+l;
                         mt_border_y.discard(discards);
-                        std::cout << "{" << objectID << "}bordery reached. discards: " << discards << "\n";
+                        //std::cout << "{" << objectID << "}bordery reached. discards: " << discards << "\n";
                         double* vector = calcUnitVector(0.0, 0.0, float_range(mt_border_y));
                         grid[l][k][0] = vector[0];
                         grid[l][k][1] = vector[1];
