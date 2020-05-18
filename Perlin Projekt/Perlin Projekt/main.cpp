@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     uint32_t discards = 0;
     uint32_t amount = SUBSECTIONS_X * SUBSECTIONS_Y;
     discards = 2;
-    amount = 2;
+    amount = 1;
 
     for (int i = 0; i < argc; i++)
     {
@@ -74,8 +74,8 @@ int main(int argc, char* argv[])
 
 
     PerlinMap<PerlinNoise2D_MEM> map(SIZE_X, SIZE_Y, SUBSECTIONS_X, SUBSECTIONS_Y, discards, amount, SEED);
-    map.threadWorker();
-    //map.calcMap();
+    //map.threadWorker();
+    map.calcMap();
     //PerlinNoise2D_MEM noise(SIZE_X, SIZE_Y, 0, 0, SEED);
     //noise.threadWorker();
     //std::thread worker(test, 4);

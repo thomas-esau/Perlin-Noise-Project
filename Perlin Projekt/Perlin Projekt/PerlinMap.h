@@ -37,7 +37,7 @@ public:
 	{
 		for (int i = 0; i < SUBSECTIONS_Y; i++)
 		{
-			std::vector<T> row;
+			std::vector<T*> row;
 			for (int j = 0; j < SUBSECTIONS_X; j++)
 			{
 				if (discards > 0)
@@ -64,12 +64,19 @@ public:
 						mapPart_size_y--;
 
 					
-					row.push_back(T(mapPart_size_x, mapPart_size_y, SUBSECTIONS_X, SUBSECTIONS_Y, SEED));
+					row.push_back(new T(mapPart_size_x, mapPart_size_y, SUBSECTIONS_X, SUBSECTIONS_Y, SEED));
 					amount--;
 					
 					std::string filename = "x" + std::to_string(j) + "y" + std::to_string(i);
-					std::cout << row[j].toString() << "\n";
+					std::cout << row.at(j)->toString() << "\n";
+					continue;
 				}
+
+				row.push_back(NULL);
+				T::skipObjectCount();
+				std::cout << "Skip Object initialization." << "\n";
+				continue;
+
 			}
 			mapPart.push_back(row);
 		}
@@ -87,7 +94,7 @@ private:
 	uint32_t sub_size_y;
 	PerlinModifiers mod;
 	//T** mapPart;
-	std::vector<std::vector<T>> mapPart;
+	std::vector<std::vector<T*>> mapPart;
 	const uint32_t SIZE_X, SIZE_Y, SUBSECTIONS_X, SUBSECTIONS_Y, SEED;
 	std::thread* worker;
 };

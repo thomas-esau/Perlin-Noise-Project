@@ -11,3 +11,4 @@
 *In PerlinNoise2D.cpp: SUBSECTIONS_X und Y statisch machen
 *ObjectID -> ObjectNr umbenennung
 *PerlinMap: constructMaps: Funktionsparameter ändern: Welche Variable wird nur einmal benötigt, welche als Member?
+*PerlinMap: Eindimensionaler Vector für <T> Pointer ausreichend.

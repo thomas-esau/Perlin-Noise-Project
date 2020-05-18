@@ -9,13 +9,14 @@ void PerlinMap<T>::calcMap()
 
 		for (int j = 0; j < SUBSECTIONS_X; j++)
 		{
+			if (mapPart[i].at(j) == NULL) continue;
 			//std::cout << "createGridPart" << "\n";
 			std::cout << "Adress: "  <<mapPart[i][j] << "\n";
-			mapPart[i][j].createGridPart(SIZE_X, SIZE_Y);
+			mapPart[i].at(j)->createGridPart(SIZE_X, SIZE_Y);
 			//mapPart[i][j].createGrid();
 			std::string filename = "x" + std::to_string(j) + "y" + std::to_string(i);
-			mapPart[i][j].dumpGrid();
-			mapPart[i][j].createPPMFile(filename, mod);
+			mapPart[i].at(j)->dumpGrid();
+			mapPart[i].at(j)->createPPMFile(filename, mod);
 		}
 	}
 
@@ -27,12 +28,12 @@ void PerlinMap<T>::threadTask(uint32_t i)
 {
 	uint32_t x = i % SUBSECTIONS_X;
 	uint32_t y = (int)(i / SUBSECTIONS_X);
-
+	if (mapPart[y].at(x) == NULL) return;
 	//std::cout << "Worker has been started. ID: " << std::this_thread::get_id() << "\n";
-	mapPart[y][x].createGridPart(SIZE_X, SIZE_Y);
+	mapPart[y].at(x)->createGridPart(SIZE_X, SIZE_Y);
 	std::string filename = "x" + std::to_string(x) + "y" + std::to_string(y);
-	mapPart[y][x].dumpGrid();
-	mapPart[y][x].createPPMFile(filename, mod);
+	mapPart[y].at(x)->dumpGrid();
+	mapPart[y].at(x)->createPPMFile(filename, mod);
 };
 
 template <typename T>

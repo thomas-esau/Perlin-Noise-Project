@@ -335,12 +335,12 @@ void PerlinNoise2D_MEM::createGridPart(uint32_t wholeMap_size_x, uint32_t wholeM
                     delete vector;
 
                 }
-                std::cout << "{" << objectID << "}: j==: " << SIZE_X << "\n";
+                //std::cout << "{" << objectID << "}: j==: " << SIZE_X << "\n";
             }
 
             if (j > mapPartPos_x)
             {
-                std::cout << "{" << objectID << "}: j>: " << (visited_j ? adjusted_size_x - 1 : adjusted_size_x) << (visited_j ? " visited_j" : "!visited_j") << "\n";
+                //std::cout << "{" << objectID << "}: j>: " << (visited_j ? adjusted_size_x - 1 : adjusted_size_x) << (visited_j ? " visited_j" : "!visited_j") << "\n";
                 mt_rng.discard(visited_j ? SIZE_X - 2 : SIZE_X );
                 visited_j = false;
             }

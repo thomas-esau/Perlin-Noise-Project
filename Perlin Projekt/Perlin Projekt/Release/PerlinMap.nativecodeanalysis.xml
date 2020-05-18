@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin Projekt\Perlin Projekt\</FILEPATH>
+      <FILENAME>PerlinNoise.h</FILENAME>
+      <LINE>17</LINE>
+      <COLUMN>1</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Die Variable "PerlinNoise2D::objectID" ist nicht initialisiert. Eine Membervariable muss immer initialisiert werden (type.6).</DESCRIPTION>
+    <FUNCTION>PerlinNoise2D::{ctor}</FUNCTION>
+    <DECORATED>??0PerlinNoise2D@@QAE@IIIII@Z</DECORATED>
+    <FUNCLINE>17</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>PerlinNoise2D::objectID</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>
