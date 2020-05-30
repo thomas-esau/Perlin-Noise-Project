@@ -39,7 +39,7 @@ public:
 	double noise(double x, double y);
 
 	// Output Functions
-	void createPPMFile(std::string filename, PerlinModifiers mod);
+	void createFile(std::string filename, std::string filetype, PerlinModifiers mod);
 	void drawNoise(unsigned int width, unsigned int height, PerlinModifiers mod);
 	std::string toString();
 	std::mt19937& getRNG() { return mt_rng; };

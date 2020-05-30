@@ -2,49 +2,94 @@
 #include <thread>
 
 int PerlinNoise2D_MEM::objectCount{ 0 };
-void PerlinNoise2D::createPPMFile(std::string filename, PerlinModifiers mod)
+void PerlinNoise2D::createFile(std::string filename, std::string filetype, PerlinModifiers mod)
 {
     uint32_t mapPartPos_x = (objectID - 1) % SUBSECTIONS_X;
     uint32_t mapPartPos_y = (int)((objectID - 1) / SUBSECTIONS_X);
-    //uint32_t sz_x = mapPartPos_x == SUBSECTIONS_X - 1 ? SIZE_X / mod.scale_x : (SIZE_X-1) / mod.scale_x;
-    //uint32_t sz_y = mapPartPos_y == SUBSECTIONS_Y - 1 ? SIZE_Y / mod.scale_y : (SIZE_Y-1) /mod.scale_x;
-    uint32_t sz_x = SUBSECTIONS_X > 1 ? (SIZE_X - 1) / mod.scale_x : SIZE_X / mod.scale_x ;
-    uint32_t sz_y = SUBSECTIONS_Y > 1 ? (SIZE_Y - 1) / mod.scale_y : SIZE_Y / mod.scale_y;
-    std::cout << "Create .ppm file...\n";
-    std::ofstream ofs;
-    std::ofstream file;
-    ofs.open("./Output/"+filename+".ppm", std::ios::out | std::ios::binary);
-    file.open("./Output/" + filename + "_output.txt");
-    file << "Calculations\n";
-    ofs << "P6\n" << sz_x << " " << sz_y << "\n255\n";
-    for (int i = 0; i < sz_y; ++i) {
-        for (int j = 0; j < sz_x; ++j)
-        {
-            double perlinValue;
-            if (mod.grayscales == 1)
-                perlinValue = (noise(( (j + 0) * mod.scale_x), ((i + 0) * mod.scale_y)) + mod.height) * mod.amplitude;
-            else
-                perlinValue = (int)((noise(((j + 0) * mod.scale_x), ((i + 0) * mod.scale_y)) + mod.height) * mod.amplitude);
-            unsigned char n = static_cast<unsigned char>(perlinValue * 255 / mod.grayscales);
-            ofs << n << n << n;
-            //file << "x"<<(j) * mod.scale_x << "y" << (i) * mod.scale_y << ":" << perlinValue << " ";
-            
-                int x0 = (int)(j * mod.scale_x);
-                int y0 = (int)(i * mod.scale_y);
-                int x1 = x0 + 1;
-                int y1 = y0 + 1;
-                double* x0y0 = getVector(x0, y0), * x1y0 = getVector(x1, y0), * x0y1 = getVector(x0, y1), * x1y1 = getVector(x1, y1);
-                //std::cout << "BugAnalysis. x" << j * mod.scale_x << "y" << i * mod.scale_y << ": " << x0y0[0] << "/" << x1y0[0] << "/" << x0y1[0] << "/" << x1y1[0] << "=" << perlinValue;
-                file << "x" << (j)*mod.scale_x << "y" << (i)*mod.scale_y << "v[x]" << x0y0[0] << "v[y]" << x0y0[1] <<"p[V]"  << perlinValue <<" ";
-                delete x0y0;
-                delete x1y0;
-                delete x0y1;
-                delete x1y1;
-        }
-        file << "\n";
+    uint32_t adjusted_size_x = SUBSECTIONS_X > 1 ? (SIZE_X - 1) / mod.scale_x : SIZE_X / mod.scale_x;
+    uint32_t adjusted_size_y = SUBSECTIONS_Y > 1 ? (SIZE_Y - 1) / mod.scale_y : SIZE_Y / mod.scale_y;
+
+
+    std::cout << "Adjusted Size X: " << adjusted_size_x << ", Adjusted Size Y: " << adjusted_size_y << "\n";
+
+    if (filetype.compare("ppm") != 0 && filetype.compare("obj") != 0)
+    {
+        std::cout << "Filetype not supported. Try ppm or obj." << "\n";
     }
-    ofs.close();
-    std::cout << ".ppm file was successfully created.\n";
+
+    std::cout << "Create ."+filetype+"file...\n";
+    std::ofstream fileoutput;
+
+
+    if (filetype.compare("ppm") == 0)
+    {
+        fileoutput.open("./Output/" + filename + "." + filetype, std::ios::out | std::ios::binary);
+        fileoutput << "P6\n" << adjusted_size_x << " " << adjusted_size_y << "\n255\n";
+        for (int i = 0; i < adjusted_size_y; ++i) {
+            for (int j = 0; j < adjusted_size_x; ++j)
+            {
+                double perlinValue;
+                if (mod.grayscales == 1)
+                    perlinValue = (noise(((j + 0) * mod.scale_x), ((i + 0) * mod.scale_y)) + mod.height) * mod.amplitude;
+                else
+                    perlinValue = (int)((noise(((j + 0) * mod.scale_x), ((i + 0) * mod.scale_y)) + mod.height) * mod.amplitude);
+                unsigned char n = static_cast<unsigned char>(perlinValue * 255 / mod.grayscales);
+                fileoutput << n << n << n;
+
+            }
+        }
+
+    }
+
+    if (filetype.compare("obj") == 0)
+    {
+        fileoutput.open("./Output/" + filename + "." + filetype);
+        //v:
+        for (int i = 0; i < adjusted_size_y + 1; ++i) {
+            for (int j = 0; j < adjusted_size_x + 1; ++j)
+            {
+                double perlinValue;
+                //perlinValue = (int)((noise(((j + 0) * mod.scale_x), ((i + 0) * mod.scale_y)) + mod.height) * mod.amplitude);
+                //perlinValue = (noise(((j * mod.scale_x - 0.5) + 0.5), ((i * mod.scale_y - 0.5) + 0.5)))* mod.amplitude;
+                //fileoutput << "v " << (j * mod.scale_x - 0.5)  << " " << perlinValue << " " << (i * mod.scale_y - 0.5 ) << "\n";
+
+                perlinValue = (noise(j * mod.scale_x, i * mod.scale_y)) * mod.amplitude;
+                fileoutput << "v " << (j * mod.scale_x) << " " << perlinValue << " " << (i * mod.scale_y) << "\n";
+
+            }
+        }
+
+        //vt:
+        for (int i = 0; i < adjusted_size_y + 1; ++i) {
+            for (int j = 0; j < adjusted_size_x + 1; ++j)
+            {
+                fileoutput << "vt " << (j * mod.scale_x) << " " << (i * mod.scale_y) << "\n";
+            }
+        }
+
+        //face:
+        int faces_x = 1. / mod.scale_x * adjusted_size_x * mod.scale_x;
+        int faces_y = 1. / mod.scale_y * adjusted_size_y * mod.scale_y;
+        for (int i = 0; i < faces_y ; ++i) {
+            for (int j = 0; j < faces_x; ++j)
+            {
+
+                fileoutput << "f ";
+                int face1 = i * (faces_x + 1) + j + 1;
+                fileoutput << face1 << "/" << face1 << "/" << face1 << " ";
+                int face2 = i * (faces_x + 1) + j + 2;
+                fileoutput << face2 << "/" << face2 << "/" << face2 << " ";
+                int face3 = (i + 1) * (faces_x + 1) + j + 2;
+                fileoutput << face3 << "/" << face3 << "/" << face3 << " ";
+                int face4 = (i + 1) * (faces_x + 1) + j + 1;
+                fileoutput << face4 << "/" << face4 << "/" << face4 << "\n";
+            }
+        }
+
+    }
+
+    fileoutput.close();
+    std::cout << "."+filetype+" file was successfully created.\n";
 }
 
 
@@ -175,6 +220,50 @@ double PerlinNoise2D::noise(double x, double y)
 
     return value;
 };
+
+//double PerlinNoise2D::noise(double x, double y, double *derivate)
+//{
+//
+//    // Zelle, in der sich x und y befinden
+//    int x0 = (int)x;
+//    int y0 = (int)y;
+//    int x1 = x0 + 1;
+//    int y1 = y0 + 1;
+//
+//
+//
+//    // Gewichte f�r x und y, um Kurve zu gl�tten
+//    double sx = x - (double)x0;
+//    double sy = y - (double)y0;
+//
+//    sx = smoothening(sx);
+//    sy = smoothening(sy);
+//
+//    double n0, n1, ix0, ix1, value;
+//
+//    double* x0y0 = getVector(x0, y0), * x1y0 = getVector(x1, y0), * x0y1 = getVector(x0, y1), * x1y1 = getVector(x1, y1);
+//
+//
+//
+//    n0 = dotProduct(x0y0[0], x0y0[1], x - (double)x0, y - (double)y0);
+//    n1 = dotProduct(x1y0[0], x1y0[1], x - (double)x1, y - (double)y0);
+//    ix0 = lerp(n0, n1, sx);
+//
+//    n0 = dotProduct(x0y1[0], x0y1[1], x - (double)x0, y - (double)y1);
+//    n1 = dotProduct(x1y1[0], x1y1[1], x - (double)x1, y - (double)y1);
+//    ix1 = lerp(n0, n1, sx);
+//
+//    value = lerp(ix0, ix1, sy);
+//
+//    derivate[0] = 2 sx * ();
+//
+//    delete x0y0;
+//    delete x1y0;
+//    delete x0y1;
+//    delete x1y1;
+//
+//    return value;
+//};
 
 std::string PerlinNoise2D::toString()
 {

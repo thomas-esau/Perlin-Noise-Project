@@ -5,3 +5,6 @@
 *.obj
 *.pdb
 *.exe
+.gitignore
+*.vcxproj
+*.vcxproj*

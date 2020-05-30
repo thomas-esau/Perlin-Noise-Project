@@ -16,7 +16,8 @@ void PerlinMap<T>::calcMap()
 			//mapPart[i][j].createGrid();
 			std::string filename = "x" + std::to_string(j) + "y" + std::to_string(i);
 			mapPart[i].at(j)->dumpGrid();
-			mapPart[i].at(j)->createPPMFile(filename, mod);
+			mapPart[i].at(j)->createFile(filename, "obj", mod);
+			mapPart[i].at(j)->createFile(filename, "ppm", mod);
 		}
 	}
 
@@ -33,7 +34,8 @@ void PerlinMap<T>::threadTask(uint32_t i)
 	mapPart[y].at(x)->createGridPart(SIZE_X, SIZE_Y);
 	std::string filename = "x" + std::to_string(x) + "y" + std::to_string(y);
 	mapPart[y].at(x)->dumpGrid();
-	mapPart[y].at(x)->createPPMFile(filename, mod);
+	mapPart[y].at(x)->createFile(filename, "ppm" , mod);
+	mapPart[y].at(x)->createFile(filename, "obj" , mod);
 };
 
 template <typename T>

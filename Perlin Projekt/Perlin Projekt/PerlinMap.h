@@ -13,9 +13,10 @@ public:
 		SIZE_X{ init_SIZE_X }, SIZE_Y{ init_SIZE_Y }, SUBSECTIONS_X{ init_SUBSECTIONS_X }, SUBSECTIONS_Y{ init_SUBSECTIONS_Y }, SEED{ init_SEED }
 	{
 		//PerlinNoiseArray
-		mod.scale_x = 1/4.;
-		mod.scale_y = 1/4.;
-		mod.amplitude = 0.5;
+		mod.scale_x = 1/32.;
+		mod.scale_y = 1/32.;
+		mod.amplitude = 0.5 * 4;
+		//mod.grayscales = mod.amplitude * 2;
 		mod.grayscales = 1;
 		mod.height = 1;
 

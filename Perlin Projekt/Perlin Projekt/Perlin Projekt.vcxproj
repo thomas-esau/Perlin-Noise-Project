@@ -154,7 +154,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="old_main.cpp" />
     <ClCompile Include="PerlinMap.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
   </ItemGroup>
