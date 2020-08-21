@@ -10,22 +10,18 @@ class PerlinMap
 public:
 
 	PerlinMap(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_SUBSECTIONS_X, uint32_t init_SUBSECTIONS_Y, uint32_t discards, uint32_t amount , uint32_t init_SEED) :
-		SIZE_X{ init_SIZE_X }, SIZE_Y{ init_SIZE_Y }, SUBSECTIONS_X{ init_SUBSECTIONS_X }, SUBSECTIONS_Y{ init_SUBSECTIONS_Y }, SEED{ init_SEED }
+		TOTAL_SIZE_X{ init_SIZE_X }, TOTAL_SIZE_Y{ init_SIZE_Y }, SUBSECTIONS_X{ init_SUBSECTIONS_X }, SUBSECTIONS_Y{ init_SUBSECTIONS_Y }, SEED{ init_SEED }
 	{
-		//PerlinNoiseArray
-		mod.scale_x = 1/32.;
-		mod.scale_y = 1/32.;
-		mod.amplitude = 0.5 * 4;
-		//mod.grayscales = mod.amplitude * 2;
-		mod.grayscales = 1;
-		mod.height = 1;
+		//PerlinParameters
+		params.freq_x = 1/32.;
+		params.freq_y = 1/32.;
+		params.amplitude = 2;
+		params.height = 1;
 
-		sub_size_x = SIZE_X / SUBSECTIONS_X * mod.scale_x;
-		sub_size_y = SIZE_Y / SUBSECTIONS_Y * mod.scale_y;
+		uint32_t sub_size_x = TOTAL_SIZE_X / SUBSECTIONS_X * params.freq_x;
+		uint32_t sub_size_y = TOTAL_SIZE_Y / SUBSECTIONS_Y * params.freq_y;
 
-		
-
-		constructMapParts(discards, amount);
+		constructMapParts(discards, amount, sub_size_x, sub_size_y);
 
 		worker = new std::thread[SUBSECTIONS_X * SUBSECTIONS_Y];
 
@@ -33,8 +29,8 @@ public:
 
 	void calcMap();
 	bool isSplittedMap() { return SUBSECTIONS_X == 1 && SUBSECTIONS_Y == 1 ? false : true; };
-	void setMods(PerlinModifiers setMod) { mod = setMod; };
-	void constructMapParts(uint32_t discards, uint32_t amount)
+	void setParams(PerlinParameters setParams) { params = setParams; };
+	void constructMapParts(uint32_t discards, uint32_t amount, uint32_t sub_size_x, uint32_t sub_size_y)
 	{
 		for (int i = 0; i < SUBSECTIONS_Y; i++)
 		{
@@ -48,14 +44,9 @@ public:
 					discards--;
 					std::cout <<"Skip Object initialization." << "\n";
 					continue;
-					
 				}
-
 				if (amount > 0)
 				{
-
-					int mapPart_offset_x = sub_size_x / SUBSECTIONS_X * j;
-					int mapPart_offset_y = sub_size_y / SUBSECTIONS_Y * i;
 					uint32_t mapPart_size_x = sub_size_x + 1;
 					uint32_t mapPart_size_y = sub_size_y + 1;
 
@@ -64,7 +55,6 @@ public:
 					if (SUBSECTIONS_Y == 1)
 						mapPart_size_y--;
 
-					
 					row.push_back(new T(mapPart_size_x, mapPart_size_y, SUBSECTIONS_X, SUBSECTIONS_Y, SEED));
 					amount--;
 					
@@ -75,28 +65,28 @@ public:
 
 				row.push_back(NULL);
 				T::skipObjectCount();
+
 				std::cout << "Skip Object initialization." << "\n";
 				continue;
 
 			}
-			mapPart.push_back(row);
+			mapParts.push_back(row);
 		}
 
 	};
 	void deconstructMapParts()
 	{
-		mapPart.clear();
+		mapParts.clear();
 	};
 	void threadWorker();
 	void threadTask(uint32_t i);
 
 private:
-	uint32_t sub_size_x;
-	uint32_t sub_size_y;
-	PerlinModifiers mod;
-	//T** mapPart;
-	std::vector<std::vector<T*>> mapPart;
-	const uint32_t SIZE_X, SIZE_Y, SUBSECTIONS_X, SUBSECTIONS_Y, SEED;
+
+	PerlinParameters params;
+	std::vector<std::vector<T*>> mapParts;
+	const uint32_t TOTAL_SIZE_X, TOTAL_SIZE_Y, SUBSECTIONS_X, SUBSECTIONS_Y, SEED;
 	std::thread* worker;
+
 };
 

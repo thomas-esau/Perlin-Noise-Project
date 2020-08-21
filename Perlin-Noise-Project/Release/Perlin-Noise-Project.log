@@ -1,0 +1,24 @@
+﻿  main.cpp
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(84,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(87,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(95,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(97,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.h(23,39): warning C4244: "=": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.h(12): message : beim Kompilieren der Klasse Vorlage-Memberfunktion "PerlinMap<PerlinNoise2D_MEM>::PerlinMap(uint32_t,uint32_t,uint32_t,uint32_t,uint32_t,uint32_t,uint32_t)"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\main.cpp(70): message : Siehe Verweis auf die gerade kompilierte Instanziierung "PerlinMap<PerlinNoise2D_MEM>::PerlinMap(uint32_t,uint32_t,uint32_t,uint32_t,uint32_t,uint32_t,uint32_t)" der Funktions-Vorlage.
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\main.cpp(70): message : Siehe Verweis auf die gerade kompilierte Klasse Vorlage-Instanziierung "PerlinMap<PerlinNoise2D_MEM>".
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.h(24,39): warning C4244: "=": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.h(39,2): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.h(38): message : beim Kompilieren der Klasse Vorlage-Memberfunktion "void PerlinMap<PerlinNoise2D_MEM>::constructMapParts(uint32_t,uint32_t)"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.h(28): message : Siehe Verweis auf die gerade kompilierte Instanziierung "void PerlinMap<PerlinNoise2D_MEM>::constructMapParts(uint32_t,uint32_t)" der Funktions-Vorlage.
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.h(42,2): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.cpp(45,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.cpp(43): message : beim Kompilieren der Klasse Vorlage-Memberfunktion "void PerlinMap<PerlinNoise2D_MEM>::threadWorker(void)"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\main.cpp(72): message : Siehe Verweis auf die gerade kompilierte Instanziierung "void PerlinMap<PerlinNoise2D_MEM>::threadWorker(void)" der Funktions-Vorlage.
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.cpp(50,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+  Code wird generiert.
+  1 of 389 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Codegenerierung ist abgeschlossen.
+  Perlin-Noise-Project.vcxproj -> C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Release\Perlin-Noise-Project.exe
