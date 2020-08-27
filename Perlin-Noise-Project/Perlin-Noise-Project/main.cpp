@@ -5,14 +5,14 @@
 #include "PerlinNoise.h"
 #include "PerlinParameters.h"
 #include "PerlinMap.h"
-#include "PerlinMap.cpp" // Zur Vermeidung von Linker Problemen bei Verwendung von Templates!
 #include <vector>
 
 
 int main(int argc, char* argv[])
 {
-    uint32_t TOTAL_SIZE_X = 64, TOTAL_SIZE_Y = 64;
-    uint32_t SUBSECTIONS_X = 1, SUBSECTIONS_Y = 1;
+    // Standardwerte für die Erzeugung des PerlinMap Objekts, falls keine Command Line Argumente übergeben wurden.
+    uint32_t TOTAL_SIZE_X = 300, TOTAL_SIZE_Y = 300;
+    uint32_t SUBSECTIONS_X = 3, SUBSECTIONS_Y = 3;
     uint32_t SEED = 2016;
     uint32_t discards = 0;
     uint32_t amount = SUBSECTIONS_X * SUBSECTIONS_Y;
@@ -65,8 +65,7 @@ int main(int argc, char* argv[])
             SUBSECTIONS_X << " SUBSECTIONS_Y: " << SUBSECTIONS_Y << " SEED: " << SEED << "\n";
     }
 
-    PerlinMap<PerlinNoise2D_MEM> map(TOTAL_SIZE_X, TOTAL_SIZE_Y, SUBSECTIONS_X, SUBSECTIONS_Y, discards, amount, SEED);
+    PerlinMap map(TOTAL_SIZE_X, TOTAL_SIZE_Y, SUBSECTIONS_X, SUBSECTIONS_Y, discards, amount, SEED);
     map.threadWorker();
-    //std::cout << "\n" << "The files have been created inside the \"Output\" folder." << "\n";
 	return 0;
 }

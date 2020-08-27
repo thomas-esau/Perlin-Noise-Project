@@ -4,17 +4,15 @@
 int PerlinNoise2D_MEM::objectCount{ 0 };
 void PerlinNoise2D::createFile(std::string filename, std::string filetype, PerlinParameters params)
 {
-    uint32_t adjusted_size_x = SUBSECTIONS_X > 1 ? (TOTAL_SIZE_X - 1) / params.freq_x : TOTAL_SIZE_X / params.freq_x;
-    uint32_t adjusted_size_y = SUBSECTIONS_Y > 1 ? (TOTAL_SIZE_Y - 1) / params.freq_y : TOTAL_SIZE_Y / params.freq_y;
-
-    //std::cout << "Adjusted Size X: " << adjusted_size_x << ", Adjusted Size Y: " << adjusted_size_y << "\n";
+    uint32_t adjusted_size_x = SUBSECTIONS_X > 1 ? (SIZE_X - 1) / params.freq_x : SIZE_X / params.freq_x;
+    uint32_t adjusted_size_y = SUBSECTIONS_Y > 1 ? (SIZE_Y - 1) / params.freq_y : SIZE_Y / params.freq_y;
 
     if (filetype.compare("ppm") != 0 && filetype.compare("obj") != 0)
     {
         std::cout << "Filetype not supported. Try ppm or obj." << "\n";
     }
 
-    std::cout << "Create ."+filetype+"file...\n";
+    std::cout << "("<< objectID << ") Create ."+filetype+"file...\n";
     std::ofstream fileoutput;
 
     if (filetype.compare("ppm") == 0)
@@ -43,16 +41,7 @@ void PerlinNoise2D::createFile(std::string filename, std::string filetype, Perli
                 double x = j * params.freq_x;
                 double y = i * params.freq_y;
                 double z = noise(x, y) * params.amplitude;
-                //perlinValue = (int)((noise(((j + 0) * params.freq_x), ((i + 0) * params.freq_y)) + params.height) * params.amplitude);
-                //perlinValue = ((int)((noise(((j + 0) * params.freq_x), ((i + 0) * params.freq_y)) + params.height) * params.amplitude * params.grayscales)) / (double) params.grayscales;
-                //perlinValue = (noise(((j * params.freq_x - 0.5) + 0.5), ((i * params.freq_y - 0.5) + 0.5)))* params.amplitude;
-                //fileoutput << "v " << (j * params.freq_x - 0.5)  << " " << perlinValue << " " << (i * params.freq_y - 0.5 ) << "\n";
-                //perlinValue2 = ((noise(j * params.freq_x * 8, i * params.freq_y * 8)) * params.amplitude * 0.1);
-                //perlinValue3 = perlinValue2 = ((noise(j * 0.5, i * 0.5)) * params.amplitude * 0.05);
-                
                 fileoutput << "v " << x << " " << z << " " << y << "\n";
-                //fileoutput << "v " << (j * params.freq_x) << " " << perlinValue + perlinValue2 + perlinValue3 << " " << (i * params.freq_y) << "\n";
-
             }
         }
 
@@ -146,7 +135,7 @@ double PerlinNoise2D::noise(double x, double y)
 std::string PerlinNoise2D::toString()
 {
 
-    std::string output = "TOTAL_SIZE_X: " + std::to_string(TOTAL_SIZE_X) + " // TOTAL_SIZE_Y: " + std::to_string(TOTAL_SIZE_Y) + 
+    std::string output = "TOTAL_SIZE_X: " + std::to_string(SIZE_X) + " // TOTAL_SIZE_Y: " + std::to_string(SIZE_Y) + 
         " // Subsections_X: " + std::to_string(SUBSECTIONS_X) + " // Subsections_Y: " + std::to_string(SUBSECTIONS_Y);
     return output;
 };
@@ -161,14 +150,14 @@ double* PerlinNoise2D_FILE::getVector(uint32_t x0, uint32_t y0)
     unsigned int i = 0;
     while (myfile >> myText)
     {
-        if (i == (TOTAL_SIZE_X * y0 * 2) + x0 * 2)
+        if (i == (SIZE_X * y0 * 2) + x0 * 2)
         {
             //std::cout << myText << "\n";
             vector[0] = std::stod(myText.c_str());
             //std::cout << vector[0] << "\n";
         }
 
-        if (i == (TOTAL_SIZE_X * y0 * 2) + x0 * 2 + 1)
+        if (i == (SIZE_X * y0 * 2) + x0 * 2 + 1)
         {
             //std::cout << myText << "\n";
             vector[1] = std::stod(myText.c_str());
@@ -189,9 +178,9 @@ void PerlinNoise2D_FILE::createGrid()
 	std::ofstream myfile;
 	myfile.open("values.txt");
 	
-	for (int i = 0; i < TOTAL_SIZE_Y; i++)
+	for (int i = 0; i < SIZE_Y; i++)
 	{
-        for (int j = 0; j < TOTAL_SIZE_X; j++)
+        for (int j = 0; j < SIZE_X; j++)
         {
             double* vector = calcUnitVector(float_range(mt_rng));
             myfile << vector[0] << " " << vector[1] << "\n";
@@ -203,17 +192,17 @@ void PerlinNoise2D_FILE::createGrid()
 
 double* PerlinNoise2D_MEM::getVector(uint32_t x0, uint32_t y0)
 {
-    if (x0 >= TOTAL_SIZE_X) x0 = x0 % TOTAL_SIZE_X;
-    if (y0 >= TOTAL_SIZE_Y) y0 = y0 % TOTAL_SIZE_Y;
+    if (x0 >= SIZE_X) x0 = x0 % SIZE_X;
+    if (y0 >= SIZE_Y) y0 = y0 % SIZE_Y;
     double* vector = new double[2]{ grid[x0][y0][0], grid[x0][y0][1] };
     return vector;
 };
 
 void PerlinNoise2D_MEM::createGrid()
 {
-    for (int i = 0; TOTAL_SIZE_Y > i; i++)
+    for (int i = 0; SIZE_Y > i; i++)
     {
-        for (int j = 0; TOTAL_SIZE_X > j; j++)
+        for (int j = 0; SIZE_X > j; j++)
         {
             double* vector = calcUnitVector(float_range(mt_rng));
             grid[j][i][0] = vector[0];
@@ -228,13 +217,12 @@ void PerlinNoise2D_MEM::createGridPart(uint32_t wholeMap_size_x, uint32_t wholeM
 {
     uint32_t mapPartPos_x = (objectID - 1) % SUBSECTIONS_X;
     uint32_t mapPartPos_y = (int)((objectID - 1) / SUBSECTIONS_X);
-    uint32_t adjusted_size_x = SUBSECTIONS_X > 1 ? TOTAL_SIZE_X - 1 : TOTAL_SIZE_X;
-    uint32_t adjusted_size_y = SUBSECTIONS_Y > 1 ? TOTAL_SIZE_Y - 1 : TOTAL_SIZE_Y;
-
+    uint32_t adjusted_size_x = SUBSECTIONS_X > 1 ? SIZE_X - 1 : SIZE_X;
+    uint32_t adjusted_size_y = SUBSECTIONS_Y > 1 ? SIZE_Y - 1 : SIZE_Y;
 
     mt_rng.discard(mapPartPos_y * adjusted_size_x * adjusted_size_y * SUBSECTIONS_X);
 
-    for (int k = 0; TOTAL_SIZE_Y > k; k++)
+    for (int k = 0; SIZE_Y > k; k++)
     {
         
         bool visitedPos_x = false;
@@ -248,10 +236,8 @@ void PerlinNoise2D_MEM::createGridPart(uint32_t wholeMap_size_x, uint32_t wholeM
             if (j == mapPartPos_x)
             {
                 visitedPos_x = true;
-                for (int l = 0; TOTAL_SIZE_X > l; l++)
+                for (int l = 0; SIZE_X > l; l++)
                 {
-                    //bool mapBorder_x_reached = mapPartPos_x == SUBSECTIONS_X - 1 && TOTAL_SIZE_X - 1 == l;
-                    //bool mapBorder_y_reached = mapPartPos_y == SUBSECTIONS_Y - 1 && TOTAL_SIZE_Y - 1 == k;
                     bool mapBorder_x_reached = mapPartPos_x == SUBSECTIONS_X - 1 && adjusted_size_x == l;
                     bool mapBorder_y_reached = mapPartPos_y == SUBSECTIONS_Y - 1 && adjusted_size_y == k;
                     bool isMapPart_x = SUBSECTIONS_X != 1;
@@ -301,7 +287,7 @@ void PerlinNoise2D_MEM::createGridPart(uint32_t wholeMap_size_x, uint32_t wholeM
 
             if (j > mapPartPos_x)
             {
-                //mt_rng.discard(visitedPos_x ? TOTAL_SIZE_X - 2 : TOTAL_SIZE_X );
+                //mt_rng.discard(visitedPos_x ? SIZE_X - 2 : SIZE_X );
                 mt_rng.discard(visitedPos_x ? adjusted_size_x - 1 : adjusted_size_x);
                 visitedPos_x = false;
             }
@@ -323,9 +309,9 @@ void PerlinNoise2D_MEM::dumpGrid()
     std::ofstream myfile;
     myfile.open("./Output/"+std::to_string(objectID)+".txt");
 
-    for (int i = 0; i < TOTAL_SIZE_Y; i++)
+    for (int i = 0; i < SIZE_Y; i++)
     {
-        for (int j = 0; j < TOTAL_SIZE_X; j++)
+        for (int j = 0; j < SIZE_X; j++)
         {
             double* vector = calcUnitVector(float_range(mt_rng));
             myfile << "x"<<j<<"y"<<i <<"="<< grid[j][i][0] << ";" << grid[j][i][1] << " | ";
@@ -348,16 +334,16 @@ void PerlinNoise2D_MEM::createGridPartOld(uint32_t x, uint32_t y)
 
     for (int i = 0; SUBSECTIONS_Y > i; i++)
     {
-        mt_rng.discard(mapPartPos_y * x * TOTAL_SIZE_Y);
+        mt_rng.discard(mapPartPos_y * x * SIZE_Y);
         for (int j = 0; SUBSECTIONS_X > j; j++)
         {
-            for (int k = 0; TOTAL_SIZE_Y > k; k++)
+            for (int k = 0; SIZE_Y > k; k++)
             {
-                if (j < mapPartPos_x) mt_rng.discard(TOTAL_SIZE_X);
+                if (j < mapPartPos_x) mt_rng.discard(SIZE_X);
 
                 if (j == mapPartPos_x)
                 {
-                    for (int l = 0; TOTAL_SIZE_X > l; l++)
+                    for (int l = 0; SIZE_X > l; l++)
                     {
                         double* vector = calcUnitVector(float_range(mt_rng));
                         grid[l][k][0] = vector[0];
@@ -365,8 +351,7 @@ void PerlinNoise2D_MEM::createGridPartOld(uint32_t x, uint32_t y)
                         delete vector;
                     }
                 }
-
-                if (j > mapPartPos_x && i == mapPartPos_y) mt_rng.discard(TOTAL_SIZE_X);
+                if (j > mapPartPos_x && i == mapPartPos_y) mt_rng.discard(SIZE_X);
             }
         }
         if (i == mapPartPos_y) return;

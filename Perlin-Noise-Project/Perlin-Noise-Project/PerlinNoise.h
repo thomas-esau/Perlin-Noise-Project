@@ -15,7 +15,7 @@ public:
 
 	// Constructors
 	PerlinNoise2D(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_SUBSECTIONS_X, uint32_t init_SUBSECTIONS_Y, uint32_t init_SEED) : 
-		TOTAL_SIZE_X{ init_SIZE_X }, TOTAL_SIZE_Y{ init_SIZE_Y }, SUBSECTIONS_X{ init_SUBSECTIONS_X }, SUBSECTIONS_Y{ init_SUBSECTIONS_Y }, SEED{ init_SEED }
+		SIZE_X{ init_SIZE_X }, SIZE_Y{ init_SIZE_Y }, SUBSECTIONS_X{ init_SUBSECTIONS_X }, SUBSECTIONS_Y{ init_SUBSECTIONS_Y }, SEED{ init_SEED }
 	{
 		mt_rng = std::mt19937(SEED);
 		float_range = std::uniform_real_distribution<float>(0,360);
@@ -27,7 +27,7 @@ public:
 	
 
 	// Virtual Functions
-	//virtual void resetPerlinNoise2D(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_SEED) { TOTAL_SIZE_X = init_SIZE_X; TOTAL_SIZE_Y = init_SIZE_Y; SEED = init_SEED; };
+	//virtual void resetPerlinNoise2D(uint32_t init_SIZE_X, uint32_t init_SIZE_Y, uint32_t init_SEED) { SIZE_X = init_SIZE_X; SIZE_Y = init_SIZE_Y; SEED = init_SEED; };
 	virtual double* getVector(uint32_t x0, uint32_t y0) = 0;
 	virtual void createGrid() = 0;
 
@@ -43,6 +43,7 @@ public:
 	//void drawNoise(unsigned int width, unsigned int height, PerlinParameters params);
 	std::string toString();
 	std::mt19937& getRNG() { return mt_rng; };
+	int getObjectID() { return objectID; };
 	void printRNG() { std::cout << float_range(mt_rng) << "\n"; };
 	static void skipObjectCount() { objectCount++; };
 
@@ -50,7 +51,7 @@ public:
 
 
 protected:
-	const uint32_t TOTAL_SIZE_X, TOTAL_SIZE_Y, SUBSECTIONS_X, SUBSECTIONS_Y, SEED;
+	const uint32_t SIZE_X, SIZE_Y, SUBSECTIONS_X, SUBSECTIONS_Y, SEED;
 	std::mt19937 mt_rng;
 	std::uniform_real_distribution<float> float_range;
 	static int objectCount;
@@ -80,11 +81,11 @@ public:
 	// Exclusive Functions from derived Class
 	void allocateGrid()
 	{
-		grid = new double** [TOTAL_SIZE_X];
-		for (int i = 0; i < TOTAL_SIZE_X; i++)
+		grid = new double** [SIZE_X];
+		for (int i = 0; i < SIZE_X; i++)
 		{
-			grid[i] = new double* [TOTAL_SIZE_Y];
-			for (int j = 0; j < TOTAL_SIZE_Y; j++)
+			grid[i] = new double* [SIZE_Y];
+			for (int j = 0; j < SIZE_Y; j++)
 			{
 				grid[i][j] = new double[2];
 			}
@@ -92,9 +93,9 @@ public:
 	};
 	void deallocateGrid()
 	{
-		for (int i = 0; i < TOTAL_SIZE_X; i++)
+		for (int i = 0; i < SIZE_X; i++)
 		{
-			for (int j = 0; j < TOTAL_SIZE_Y; j++)
+			for (int j = 0; j < SIZE_Y; j++)
 			{
 				delete grid[i][j];
 			}
@@ -103,7 +104,7 @@ public:
 		delete grid;
 	};
 	void createGrid() override;
-	void createGridPart(uint32_t wholeMap_size_x, uint32_t wholeMap_size_y);
+	void createGridPart(uint32_t total_size_x, uint32_t total_size_y);
 	
 	void createGridPartOld(uint32_t x, uint32_t y);
 	void dumpGrid();
