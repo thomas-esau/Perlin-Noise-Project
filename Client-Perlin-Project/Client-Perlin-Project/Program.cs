@@ -110,6 +110,7 @@ public class AsynchronousClient
             Console.ReadLine();
             Console.Clear();
             PrintStatistics();
+            Console.ReadLine();
 
         }
         catch (Exception e)
@@ -122,10 +123,10 @@ public class AsynchronousClient
 
     static void Initialize()
     {
-        commandLineArguments.size_x = 2400;
-        commandLineArguments.size_y = 2400;
-        commandLineArguments.subsections_x = 6;
-        commandLineArguments.subsections_y = 1;
+        commandLineArguments.size_x = 1024;
+        commandLineArguments.size_y = 1024;
+        commandLineArguments.subsections_x = 2;
+        commandLineArguments.subsections_y = 2;
         commandLineArguments.seed = 2000;
 
         standard_args = commandLineArguments;

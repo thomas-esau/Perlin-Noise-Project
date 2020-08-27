@@ -12,7 +12,7 @@ void PerlinNoise2D::createFile(std::string filename, std::string filetype, Perli
         std::cout << "Filetype not supported. Try ppm or obj." << "\n";
     }
 
-    std::cout << "("<< objectID << ") Create ."+filetype+"file...\n";
+    std::cout << "Create ."+filetype+"file...\n";
     std::ofstream fileoutput;
 
     if (filetype.compare("ppm") == 0)

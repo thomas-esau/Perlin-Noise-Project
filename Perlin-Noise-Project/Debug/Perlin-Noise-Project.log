@@ -1,14 +1,4 @@
-﻿  PerlinMap.cpp
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(85,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(88,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(96,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(98,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.h(29,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.h(40,21): warning C4244: "Initialisierung": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.h(41,21): warning C4244: "Initialisierung": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.cpp(18,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.cpp(22,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-  PerlinNoise.cpp
+﻿  PerlinNoise.cpp
 C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(85,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
 C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(88,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
 C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(96,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
@@ -30,22 +20,13 @@ C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perli
 C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(229,39): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
 C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(231,19): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
 C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(239,40): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(290,19): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(314,23): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(316,27): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(337,35): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(340,39): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(342,36): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(344,23): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(348,44): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(356,23): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
-  main.cpp
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(85,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(88,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(96,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.h(98,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.h(29,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.h(40,21): warning C4244: "Initialisierung": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
-C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinMap.h(41,21): warning C4244: "Initialisierung": Konvertierung von "double" in "uint32_t", möglicher Datenverlust
-  Code wird generiert...
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(288,19): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(312,23): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(314,27): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(335,35): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(338,39): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(340,36): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(342,23): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(346,44): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
+C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Perlin-Noise-Project\PerlinNoise.cpp(354,23): warning C4018: ">": Konflikt zwischen "signed" und "unsigned"
   Perlin-Noise-Project.vcxproj -> C:\Users\Thomas\Documents\GitHub\Perlin-Noise-Project\Perlin-Noise-Project\Debug\Perlin-Noise-Project.exe
